@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace inicial;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,12 +8,12 @@ class Establecimiento extends Model
 {
     public function comuna()
     {
-        return $this->hasMany('App\Comuna');
+        return $this->hasMany('inicial\Comuna');
     }
 	
 	public function tipo()
     {
-        return $this->hasMany('App\TipoEstab');
+        return $this->hasMany('inicial\TipoEstab');
     }
 	
 	/**
@@ -21,7 +21,7 @@ class Establecimiento extends Model
      */
 	public function users()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('inicial\User');
     }
 	
 	/**

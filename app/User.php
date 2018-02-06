@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace inicial;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,7 +41,7 @@ class User extends Authenticatable
      */
 	public function roles()
     {
-        return $this->belongsToMany('App\Role');
+        return $this->belongsToMany('inicial\Role');
     }
 	
 	public function isRole($roleName)
@@ -62,7 +62,7 @@ class User extends Authenticatable
      */
 	public function establecimientos()
     {
-        return $this->belongsToMany('App\Establecimiento');
+        return $this->belongsToMany('inicial\Establecimiento');
     }
 	
 	public function isEstab($estabName)

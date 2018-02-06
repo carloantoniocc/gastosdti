@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace inicial\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
-use App\TipoEstab;
+use inicial\TipoEstab;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -22,8 +22,6 @@ class TipoEstabsController extends Controller
     {
         $this->middleware('auth');
 		
-		//Controladores de usuarios
-        $this->middleware('admin');
     }
 	
 	/**

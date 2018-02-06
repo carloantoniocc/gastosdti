@@ -12,23 +12,23 @@
 					
 					<ul class="dropdown-menu" role="menu">
 						<li>
-							<a href="/users"> Usuarios </a>
+							<a href="{{ URL::to('users') }}"> Usuarios </a>
 						</li>
 						
 						<li class="divider"></li>
 						
 						<li>
-							<a href="/establecimientos"> Establecimientos </a>
+							<a href="{{ URL::to('establecimientos') }}"> Establecimientos </a>
 						</li>
 						
 						<li>
-							<a href="/tipoEstabs"> Tipo de Establecimiento </a>
+							<a href="{{ URL::to('tipoEstabs') }}"> Tipo de Establecimiento </a>
 						</li>
 						
 						<li class="divider"></li>
 						
 						<li>
-							<a href="/comunas"> Comunas </a>
+							<a href="{{ URL::to('comunas') }}"> Comunas </a>
 						</li>
 						
 						<li class="divider"></li>

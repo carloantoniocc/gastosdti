@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace inicial\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
-use App\Comuna;
+use inicial\Comuna;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -22,9 +22,7 @@ class ComunasController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-		
-		//Controladores de usuarios
-        $this->middleware('admin');
+				
     }  
 	
 	/**
