@@ -22,7 +22,9 @@ class ComunasController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-				
+		//Controladores de usuarios
+        $this->middleware('admin');
+        		
     }  
 	
 	/**

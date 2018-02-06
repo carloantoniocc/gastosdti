@@ -21,7 +21,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 //RUTAS ADMINISTRACION DE USUARIOS
-Route::resource('users','UsersController')->middleware('admin');
+Route::resource('users','UsersController');
 
 //RUTAS ASIGNAR ROLES
 Route::get('users/asignRole/{user}', 'UsersController@asignRole');
@@ -32,13 +32,13 @@ Route::get('users/asignEstab/{user}', 'UsersController@asignEstab');
 Route::post('users/saveEstab', 'UsersController@saveEstab');
 
 //RUTAS TIPO ESTABLECIMIENTO
-Route::resource('tipoEstabs','TipoEstabsController')->middleware('admin');
+Route::resource('tipoEstabs','TipoEstabsController');
 
 //RUTAS COMUNAS
-Route::resource('comunas','ComunasController')->middleware('admin');
+Route::resource('comunas','ComunasController');
 
 //RUTA ESTABLECIMIENTOS
-Route::resource('establecimientos','EstablecimientosController')->middleware('admin');
+Route::resource('establecimientos','EstablecimientosController');
 
 //RUTA LOGIN AJAX
 Route::get('getEstab/{mail}','Auth\LoginController@getEstab');
