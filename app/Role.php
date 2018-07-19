@@ -1,6 +1,6 @@
 <?php
 
-namespace inicial;
+namespace GastosDTI;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +12,6 @@ class Role extends Model
      */
 	public function users()
     {
-        return $this->belongsToMany('inicial\User');
+        return $this->belongsToMany('GastosDTI\User');
     }
 }

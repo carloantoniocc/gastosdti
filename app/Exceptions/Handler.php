@@ -1,6 +1,6 @@
 <?php
 
-namespace inicial\Exceptions;
+namespace GastosDTI\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

@@ -1,12 +1,12 @@
 <?php
 
-namespace inicial\Http\Controllers\Auth;
+namespace GastosDTI\Http\Controllers\Auth;
 
-use inicial\Http\Controllers\Controller;
+use GastosDTI\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
-use inicial\User;
+use GastosDTI\User;
 
 class LoginController extends Controller
 {

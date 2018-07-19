@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => inicial\User::class,
+            'model' => GastosDTI\User::class,
         ],
 
         // 'users' => [

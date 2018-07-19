@@ -1,9 +1,9 @@
 <?php
 
-namespace inicial\Http\Controllers\Auth;
+namespace GastosDTI\Http\Controllers\Auth;
 
-use inicial\User;
-use inicial\Http\Controllers\Controller;
+use GastosDTI\User;
+use GastosDTI\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -58,7 +58,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \inicial\User
+     * @return \GastosDTI\User
      */
     protected function create(array $data)
     {

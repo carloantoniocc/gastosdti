@@ -1,15 +1,15 @@
 <?php
 
-namespace inicial\Http\Controllers;
+namespace GastosDTI\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
-use inicial\User;
-use inicial\Role;
-use inicial\Establecimiento;
+use GastosDTI\User;
+use GastosDTI\Role;
+use GastosDTI\Establecimiento;
 
 use DB;
 use Illuminate\Support\Facades\Auth;

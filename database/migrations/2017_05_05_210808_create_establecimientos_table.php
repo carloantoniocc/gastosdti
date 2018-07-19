@@ -16,6 +16,7 @@ class CreateEstablecimientosTable extends Migration
         Schema::create('establecimientos', function (Blueprint $table) {
             $table->increments('id')->index();
 			$table->string('code')->unique();
+            $table->string('entelcode')->nullable()->unique();
 			$table->string('name')->unique();
 			$table->integer('tipo_id')->unsigned();
             $table->integer('comuna_id')->unsigned();

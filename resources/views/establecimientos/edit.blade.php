@@ -19,7 +19,7 @@
                         {{ csrf_field() }}
 						<!--Campo Codigo-->
                         <div class="form-group{{ $errors->has('code') ? ' has-error' : '' }}">
-                            <label for="codigo" class="col-md-4 control-label">Código</label>
+                            <label for="codigo" class="col-md-4 control-label">Código Entel</label>
 
                             <div class="col-md-6">
                                 <input id="code" type="text" class="form-control" name="code" value="{{$establecimiento->code}}" required autofocus>

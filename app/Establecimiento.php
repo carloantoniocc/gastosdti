@@ -1,6 +1,6 @@
 <?php
 
-namespace inicial;
+namespace GastosDTI;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,12 +8,12 @@ class Establecimiento extends Model
 {
     public function comuna()
     {
-        return $this->hasMany('inicial\Comuna');
+        return $this->hasMany('GastosDTI\Comuna');
     }
 	
 	public function tipo()
     {
-        return $this->hasMany('inicial\TipoEstab');
+        return $this->hasMany('GastosDTI\TipoEstab');
     }
 	
 	/**
@@ -21,7 +21,7 @@ class Establecimiento extends Model
      */
 	public function users()
     {
-        return $this->belongsToMany('inicial\User');
+        return $this->belongsToMany('GastosDTI\User');
     }
 	
 	/**
@@ -33,4 +33,16 @@ class Establecimiento extends Model
 	{
 		return Establecimiento::select('name')->where('id',$id);
 	}
+
+
+	public static function establecimientosxcomuna($id){
+		return Establecimiento::where('comuna_id','=',$id);
+	}
+
+
+	public function establecimiento()
+	{
+		return $this->hasOne('GastosDTI\Establecimiento');
+	}
+
 }

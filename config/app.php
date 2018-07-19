@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -171,11 +172,11 @@ return [
         /*
          * Application Service Providers...
          */
-        inicial\Providers\AppServiceProvider::class,
-        inicial\Providers\AuthServiceProvider::class,
-        // inicial\Providers\BroadcastServiceProvider::class,
-        inicial\Providers\EventServiceProvider::class,
-        inicial\Providers\RouteServiceProvider::class,
+        GastosDTI\Providers\AppServiceProvider::class,
+        GastosDTI\Providers\AuthServiceProvider::class,
+        // GastosDTI\Providers\BroadcastServiceProvider::class,
+        GastosDTI\Providers\EventServiceProvider::class,
+        GastosDTI\Providers\RouteServiceProvider::class,
 
     ],
 
@@ -225,6 +226,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,      
 
     ],
 

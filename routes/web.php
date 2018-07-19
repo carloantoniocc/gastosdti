@@ -11,8 +11,25 @@
 |
 */
 
+
+
 //CAMBIA VISTA LOGIN COMO INICIO DE SITIO
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+
+
+//carga importar uf
+Route::post('dolars/importar', 'DolarController@postimportar');
+
+
+//carga masiva uf
+Route::get('dolars/cmdolar', 'DolarController@getcmdolar');
+
+//carga descargar file
+Route::get('ufs/downloadfile/{file}', 'UfController@downloadFile');
+
+//carga descargar file
+Route::get('ufs/downloadfilenamestorage/{file}', 'UfController@downloadfilenamestorage');
+
 
 //RUTAS DE USUARIO LARAVEL
 Auth::routes();
@@ -42,3 +59,82 @@ Route::resource('establecimientos','EstablecimientosController');
 
 //RUTA LOGIN AJAX
 Route::get('getEstab/{mail}','Auth\LoginController@getEstab');
+
+//RUTA FACTURAS
+Route::get('facturas/cmfacturas','FacturaController@cmfacturas');
+Route::post('facturas/importarfact', 'FacturaController@getimportarfact');
+Route::resource('facturas','FacturaController');
+
+//Detalle Facturas
+Route::resource('detallefacturas','DetalleFacturaController');
+Route::get('detallefacturas/{factura}/detallegeneral','DetalleFacturaController@detallegeneral');
+Route::get('detallefacturas/{idresumenfactura}/detalleitem','DetalleFacturaController@detalleitem');
+
+
+//Api
+Route::get('api/v1/facturas','FacturaController@getfacturas');
+
+//Provider
+Route::resource('providers','ProviderController');
+
+//Categorie
+
+
+Route::resource('categories','CategorieController');
+//Route::get('categories/{id}/crearitem','CategorieController@crearitem');
+Route::get('categories/showcategorie/{id}','CategorieController@showcategorie');
+Route::get('categories/edit/item/{id}','CategorieController@edititem');
+Route::post('categories/update/item/{id}', 'CategorieController@postupdateitem');
+
+
+//Item
+Route::resource('items','ItemController');
+
+
+//Moneda
+Route::resource('monedas','MonedaController');
+
+
+
+//carga masiva uf
+Route::get('ufs/cmuf', 'UfController@getcmuf');
+
+
+//carga importar uf
+Route::post('ufs/importar', 'UfController@getimportar');
+
+//Uf
+Route::resource('ufs','UfController');
+
+//Dolar
+Route::resource('dolars','DolarController');
+
+//Upload
+Route::resource('uploads','UploadController');
+Route::get('uploads/{id}/inicio','UploadController@inicio');
+
+//index de carga masiva
+Route::get('uploadsfactura/{resumenfactura}/upload','UploadController@upload');
+//importar file
+Route::post('uploadsfactura/{resumenfactura}/importar','UploadController@importar');
+//descargar
+Route::get('uploadsfactura/storage/{storage}/downloadfile','UploadController@downloadfile');
+
+
+//reportes
+//index
+Route::resource('tablereports','TableReportController');
+Route::get('tablereportsest/{id}','TableReportController@getEstablecimientos');
+//consulta
+Route::get('tablereports/consultar','TableReportController@consultar');
+
+Route::resource('storages','StorageController');
+
+
+
+Route::resource('entelcodes','EntelcodeController');
+Route::get('entelcodes/{establecimiento}/editcode','EntelcodeController@editcode');
+Route::post('entelcodes/{establecimiento}/updatecode','EntelcodeController@updatecode');
+
+
+

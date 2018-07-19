@@ -1,10 +1,12 @@
 <?php
 
-namespace inicial;
+namespace GastosDTI;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Comuna extends Model
 {
-    //
+    protected $table = 'comunas';
+
+
 }

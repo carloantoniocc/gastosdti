@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,18 +16,45 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/base.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
 
     <!-- Scripts -->
 	<script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+
+
+
+    function imprSelec(historial){
+      var ficha=document.getElementById(historial);
+      var ventimp=window.open(' ','popimpr');
+      ventimp.document.write(ficha.innerHTML);
+      ventimp.document.close();
+      ventimp.print();
+      ventimp.close();
+    }
+
     </script>
+    
+
+<!--
+  <style type="text/css">
+    td {
+      border: orange 5px solid;
+    } 
+-->    
+  </style>
+
+
+
 </head>
 <body>
-    <div id="app1">
+    
+    <div id="app2">
         <nav class="navbar navbar-default navbar-static-top background-menu">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -41,20 +69,29 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img alt="" src="{{ asset('image/logo.png') }}">
+                        <img width="20px" height="20px" src="{{ asset('image/favicon.ico') }}">
                     </a>
                 </div>
 				
+
+                
 				<!-- Incluye Menú -->
 				@include('layouts.menu')
                 
             </div>
         </nav>
 
-        @yield('content')
+
+            @yield('content')            
+
+
     </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/dropdown.js') }}"></script>
+    <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+    @yield('scripts')
+
 </body>
 </html>

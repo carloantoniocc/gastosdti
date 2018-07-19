@@ -1,8 +1,8 @@
 <?php
 
-namespace inicial\Http\Controllers\Auth;
+namespace GastosDTI\Http\Controllers\Auth;
 
-use inicial\Http\Controllers\Controller;
+use GastosDTI\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller

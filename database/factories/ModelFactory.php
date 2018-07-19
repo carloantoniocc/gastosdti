@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(inicial\User::class, function (Faker\Generator $faker) {
+$factory->define(GastosDTI\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -20,5 +20,24 @@ $factory->define(inicial\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+
+
+$factory->define(GastosDTI\Dolar::class, 'active' ,function (Faker\Generator $faker) {
+
+    return [
+        'fecha' => $faker->date,
+        'valor' => $faker->decimal,
+        'active' => true,
+    ];
+});
+
+$factory->define(GastosDTI\Dolar::class, 'inactive' ,function (Faker\Generator $faker) {
+
+    return [
+        'fecha' => $faker->date,
+        'valor' => $faker->decimal,
+        'active' => false,
     ];
 });

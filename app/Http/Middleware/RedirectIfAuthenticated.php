@@ -1,6 +1,6 @@
 <?php
 
-namespace inicial\Http\Middleware;
+namespace GastosDTI\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

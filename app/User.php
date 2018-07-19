@@ -1,6 +1,6 @@
 <?php
 
-namespace inicial;
+namespace GastosDTI;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,7 +41,7 @@ class User extends Authenticatable
      */
 	public function roles()
     {
-        return $this->belongsToMany('inicial\Role');
+        return $this->belongsToMany('GastosDTI\Role');
     }
 	
 	public function isRole($roleName)
@@ -62,7 +62,7 @@ class User extends Authenticatable
      */
 	public function establecimientos()
     {
-        return $this->belongsToMany('inicial\Establecimiento');
+        return $this->belongsToMany('GastosDTI\Establecimiento');
     }
 	
 	public function isEstab($estabName)
@@ -76,5 +76,12 @@ class User extends Authenticatable
         }
 
         return false;
-    }	
+    }
+
+    public function getUser(Request $request)
+    {
+        return $request->user();
+    }
+
+    	
 }

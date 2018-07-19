@@ -1,13 +1,13 @@
 <?php
 
-namespace inicial\Http\Controllers;
+namespace GastosDTI\Http\Controllers;
 
 use Illuminate\Http\Request;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
-use inicial\TipoEstab;
+use GastosDTI\TipoEstab;
 
 use Illuminate\Support\Facades\Auth;
 
