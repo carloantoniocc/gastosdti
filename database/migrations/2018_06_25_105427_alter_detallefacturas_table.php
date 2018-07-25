@@ -31,4 +31,6 @@ class AlterDetallefacturasTable extends Migration
             //
         });
     }
+
+    //archivo modificado
 }
