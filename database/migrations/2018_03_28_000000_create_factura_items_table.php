@@ -25,6 +25,7 @@ class CreateFacturaItemsTable extends Migration
             $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('cascade');
 
 
+
         });
     }
 
@@ -35,6 +36,20 @@ class CreateFacturaItemsTable extends Migration
      */
     public function down()
     {
+        
+        Schema::table('factura_items', function (Blueprint $table) 
+        {
+            
+
+            $table->dropForeign('factura_items_factura_id_foreign');
+            $table->dropForeign('factura_items_item_id_foreign');
+            $table->dropColumn('factura_id');
+            $table->dropColumn('item_id');
+
+           
+        });
+
         Schema::dropIfExists('factura_items');
+
     }
 }

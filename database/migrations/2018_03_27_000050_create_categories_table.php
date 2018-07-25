@@ -18,10 +18,11 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('descripcion');
             $table->boolean('active')->default(true);
-            $table->timestamps();
 
+            $table->integer('moneda_id')->unsigned();
+            $table->timestamps();            
 
-
+            $table->foreign('moneda_id')->references('id')->on('monedas')->onUpdate('cascade')->onDelete('cascade');             
 
         });
     }

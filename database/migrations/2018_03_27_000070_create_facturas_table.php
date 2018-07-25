@@ -15,6 +15,8 @@ class CreateFacturasTable extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->increments('id')->index();
+            $table->integer('provider_id')->unsigned();
+            $table->integer('categorie_id')->nullable()->unsigned();            
             $table->integer('numero');
             $table->date('fecha_recepcion');
             $table->date('fecha_emision')->nullable();
@@ -24,9 +26,9 @@ class CreateFacturasTable extends Migration
             $table->integer('notacredito')->nullable();
             $table->integer('orden_compra')->nullable();
             $table->boolean('active')->default(true);            
-            $table->integer('provider_id')->unsigned();
             $table->timestamps();
 
+            $table->foreign('categorie_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('provider_id')->references('id')->on('providers')->onUpdate('cascade')->onDelete('cascade');            
 
         });
@@ -35,10 +37,19 @@ class CreateFacturasTable extends Migration
     /**
      * Reverse the migrations.
      *
-     * @return void
+     * @return void+6
      */
     public function down()
     {
+
+        Schema::table('facturas', function (Blueprint $table) 
+        {
+
+
+        });
+
+
         Schema::dropIfExists('facturas');
+
     }
 }

@@ -21,6 +21,9 @@ class CreateUploadsTable extends Migration
             $table->integer('iduser');
             $table->timestamps();
 
+            $table->integer('storage_id')->unsigned(); 
+            $table->foreign('storage_id')->references('id')->on('storages')->onUpdate('cascade')->onDelete('cascade');            
+
 
 
         });

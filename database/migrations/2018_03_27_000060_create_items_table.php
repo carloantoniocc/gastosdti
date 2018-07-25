@@ -18,9 +18,12 @@ class CreateItemsTable extends Migration
             $table->integer('categorie_id')->unsigned();
             $table->string('name');
             $table->boolean('active');
+            $table->integer('storage_id')->unsigned(); 
             $table->timestamps();
-
+            
+            $table->foreign('storage_id')->references('id')->on('storages')->onUpdate('cascade')->onDelete('cascade');             
             $table->foreign('categorie_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
+            
         });
     }
 
