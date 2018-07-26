@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use GastosDTI\Uf;
 
-class UfsSeeder extends Seeder
+class UfSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,12 +13,15 @@ class UfsSeeder extends Seeder
     public function run()
     {
 
+
         DB::table('ufs')->insert([
             'fecha' => '2018-04-01 03:00:00',
             'valor' => '26800',   
             'active' => '1',         
         ]);
 
+        factory(Uf::class, 20)->create();
 
     }
+    
 }

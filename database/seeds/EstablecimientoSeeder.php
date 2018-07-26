@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use GastosDTI\Establecimiento;
 
-class EstablecimientosSeeder extends Seeder
+class EstablecimientoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,14 +12,15 @@ class EstablecimientosSeeder extends Seeder
      */
     public function run()
     {
+        
 
 		DB::table('establecimientos')->insert([
             'id' => '1',
             'code' => '110010',
             'entelcode' => NULL,
             'name' => 'S.S Metropolitano Occidente',
-            'tipo_id' => '1',
-            'comuna_id' => '1',
+            //'tipo_id' => '1',
+            //'comuna_id' => '1',
             'direccion' => '',
             'X' => '0',
             'Y' => '0',
@@ -27,6 +29,7 @@ class EstablecimientosSeeder extends Seeder
             'updated_at' => '2017-05-13 03:00:00'
         ]);
 
+    	factory(Establecimiento::class,50)->create();
 
 
     }

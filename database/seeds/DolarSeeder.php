@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ProvidersSeeder extends Seeder
+class DolarSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,11 +13,12 @@ class ProvidersSeeder extends Seeder
     {
 
 
-        DB::table('providers')->insert([
-            'name' => 'Entel',
-            'rut' => '123123123',   
+        DB::table('dolars')->insert([
+            'fecha' => '2018-04-01 03:00:00',
+            'valor' => '650',   
             'active' => '1',         
-        ]);
+        ]); 
+
 
     }
 }

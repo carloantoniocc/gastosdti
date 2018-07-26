@@ -18,8 +18,8 @@ class CreateEstablecimientosTable extends Migration
 			$table->string('code')->unique();
             $table->string('entelcode')->nullable()->unique();
 			$table->string('name')->unique();
-			$table->integer('tipo_id')->unsigned();
-            $table->integer('comuna_id')->unsigned();
+			$table->integer('tipo_id')->nullable()->unsigned(); //nulos
+            $table->integer('comuna_id')->nullable()->unsigned(); //nulos
 			$table->string('direccion');
 			$table->double('X', 15, 8)->nullable();
 			$table->double('Y', 15, 8)->nullable();

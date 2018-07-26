@@ -27,33 +27,41 @@ class DatabaseSeeder extends Seeder
             'monedas',
             'categories',
             'storages',
+            'facturas',
+            'items',
         ]);        
 
-        $this->call(RolesSeeder::class);
-        $this->call(ComunasSeeder::class);
-        $this->call(TipoEstablecimientoSeeder::class);
-        $this->call(EstablecimientosSeeder::class);
-        $this->call(UsersSeeder::class);
-        $this->call(RoleUserSeeder::class);
+
+        $this->call(CategorieSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(EstablecimientoSeeder::class);
+        $this->call(RolSeeder::class);
+        $this->call(RolUserSeeder::class);
+        $this->call(TipoEstabSeeder::class);
+        $this->call(ComunaSeeder::class);
         $this->call(EstablecimientoUserSeeder::class);
-        $this->call(DolarsSeeder::class);
-        $this->call(UfsSeeder::class);
-        $this->call(ProvidersSeeder::class);
-        $this->call(MonedasSeeder::class);
-        $this->call(CategoriesSeeder::class);
-        $this->call(StoragesSeeder::class);
+        $this->call(ProviderSeeder::class); 
+        $this->call(UfSeeder::class);       
+        $this->call(DolarSeeder::class);
+        $this->call(MonedaSeeder::class);
+        $this->call(StorageSeeder::class);
+        $this->call(FacturaSeeder::class);
+        $this->call(ItemSeeder::class);
 
 
     }
 
     public function truncateTables(array $tables)
     {
+        // desactivar restriccion clave foranea
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
  
+        //eliminar las tablas
         foreach ($tables as $table) {
             DB::table($table)->truncate();
         }
  
+        // Activar restriccion clave foranea
         DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
     }
 

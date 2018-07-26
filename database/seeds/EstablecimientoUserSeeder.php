@@ -11,12 +11,13 @@ class EstablecimientoUserSeeder extends Seeder
      */
     public function run()
     {
-
-
+ 
 		DB::table('establecimiento_user')->insert([
             'user_id' => '1',
             'establecimiento_id' => '1',            
         ]);  
+
+
 
     }
 }
