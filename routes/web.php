@@ -17,6 +17,12 @@
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 
 
+//RUTA FACTURAS
+Route::get('facturas/cmfacturas','FacturaController@cmfacturas');
+Route::post('facturas/importarfact', 'FacturaController@getimportarfact');
+Route::resource('facturas','FacturaController');
+
+
 //carga importar uf
 Route::post('dolars/importar', 'DolarController@postimportar');
 
@@ -60,10 +66,7 @@ Route::resource('establecimientos','EstablecimientosController');
 //RUTA LOGIN AJAX
 Route::get('getEstab/{mail}','Auth\LoginController@getEstab');
 
-//RUTA FACTURAS
-Route::get('facturas/cmfacturas','FacturaController@cmfacturas');
-Route::post('facturas/importarfact', 'FacturaController@getimportarfact');
-Route::resource('facturas','FacturaController');
+
 
 //Detalle Facturas
 Route::resource('detallefacturas','DetalleFacturaController');

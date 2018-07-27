@@ -22,6 +22,7 @@ class FacturaController extends Controller
      */
     public function index()
     {
+ 
         if (Auth::check()) 
         {
 
@@ -33,7 +34,9 @@ class FacturaController extends Controller
                         ->paginate(20);
 
 
-            return view('facturas.index', ['facturas'=> $facturas] );
+            return view('facturas.index', [
+                'facturas'=> $facturas
+            ]);
             
         }else{
 
@@ -72,6 +75,7 @@ class FacturaController extends Controller
     public function store(Request $request)
     {
 
+
         if (Auth::check()) {
 
             $validator = validator::make($request->all(), [
@@ -84,6 +88,8 @@ class FacturaController extends Controller
                 'active' => 'required'
             ]);
 
+            
+
             $categorie = Categorie::find($request->input('categorie_id'));
             $items = $categorie->items;
 
@@ -95,6 +101,7 @@ class FacturaController extends Controller
 
             });    
 
+
             if ($validator->fails()){
 
                 return redirect('facturas/create')
@@ -102,7 +109,6 @@ class FacturaController extends Controller
                 ->withInput();  
 
             }else{ 
-
 
                     $factura = new Factura;
                     $factura->provider_id =  $request->input('provider_id');

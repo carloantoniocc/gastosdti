@@ -15,7 +15,7 @@ class FacturaSeeder extends Seeder
     public function run()
     {
 
-		factory(Factura::class, 100)->create();
+		//factory(Factura::class, 100)->create();
 
 
  /**       

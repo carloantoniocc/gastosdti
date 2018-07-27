@@ -33,46 +33,51 @@
 					<!-- Lista de Comunas -->		
 					<div class="row">
 						<div class="col-lg-12">
-							<table class="table table-striped">
-								<thead>
-								  <tr>
-								  	<th>Numero Factura</th>
-									<th>Proveedor</th>
-									<th>Fecha Recepcion</th>
-									<th>Monto</th>
-									<th>Categoria</th>
-									<th>Nota de Credito</th>																		
-									<th>Estado</th>
-									<th>Editar</th>
-									<th>Detalle</th>
-								  </tr>
-								</thead>
-								<tbody>
-								  @foreach($facturas as $factura)
-								  <tr>
-								  	<td>{{ $factura->numero }}</td>
-									<td>{{ $factura->proveedor }}</td>
-									<td>{{ $factura->fecha_recepcion }}</td>
-									<td>{{ $factura->monto }}</td>
-									<td>{{ $factura->categoria }}</td>
-									<td>{{ $factura->notacredito }}</td>
-									<td>
-										@if( $factura->active == 1 )
-											Activo
-										@else
-											Inactivo
-										@endif
-									</td>
-    								<td><a href="{{ URL::to('facturas/' . $factura->id . '/edit') }}" >editar</a></td>
-									<td><a href="{{ URL::to('detallefacturas/' . $factura->id . '/detallegeneral') }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list" style="font-size: 13px"><span></a></td>											
+				        	@if ($facturas->isNotEmpty() ) 
+								<table class="table table-striped">
+									<thead>
+									  <tr>
+									  	<th>Numero Factura</th>
+										<th>Proveedor</th>
+										<th>Fecha Recepcion</th>
+										<th>Monto</th>
+										<th>Categoria</th>
+										<th>Nota de Credito</th>																		
+										<th>Estado</th>
+										<th>Editar</th>
+										<th>Detalle</th>
+									  </tr>
+									</thead>
+									<tbody>
+									  @foreach($facturas as $factura)
+									  <tr>
+									  	<td>{{ $factura->numero }}</td>
+										<td>{{ $factura->proveedor }}</td>
+										<td>{{ $factura->fecha_recepcion }}</td>
+										<td>{{ $factura->monto }}</td>
+										<td>{{ $factura->categoria }}</td>
+										<td>{{ $factura->notacredito }}</td>
+										<td>
+											@if( $factura->active == 1 )
+												Activo
+											@else
+												Inactivo
+											@endif
+										</td>
+	    								<td><a href="{{ URL::to('facturas/' . $factura->id . '/edit') }}" >editar</a></td>
+										<td><a href="{{ URL::to('detallefacturas/' . $factura->id . '/detallegeneral') }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list" style="font-size: 13px"><span></a></td>											
 
-								  </tr>
-								  @endforeach
-								</tbody>
-							</table>
+									  </tr>
+									  @endforeach
+									</tbody>
+								</table>
 
-							<!--paginacion-->
-							{{ $facturas->appends(request()->input())->links() }}
+								<!--paginacion-->
+								{{ $facturas->appends(request()->input())->links() }}
+
+							@else
+								<h2>No existen Facturas</h2>
+				            @endif
 
 						</div>
 					</div>
