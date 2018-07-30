@@ -10,20 +10,17 @@ class Factura extends Model
     protected $table = 'facturas';
 
     protected $fillable = [
-    	'numero','fecha',
+    	'numero','fecha', 'provider'
     ];
-
-    public function detallefactura(){
-		$this->hasMany('app\DetalleFactura');
-    }
-
-    public function moneda(){
-		$this->belongTo('app\Moneda');
-    }
 
     public function categorie()
     {
         return $this->belongsTo(Categorie::class);
+    }
+
+    public function provider()
+    {
+        return $this->belongsTo(Provider::class);
     }
 
 

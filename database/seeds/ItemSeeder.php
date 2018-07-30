@@ -12,7 +12,8 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
-        
+ 
+ /**       
     	Item::create([
 				'categorie_id' => 1,
 				'name' => '(1) DATOS',
@@ -40,6 +41,7 @@ class ItemSeeder extends Seeder
                 'active' => 1,
                 'storage_id' => 2,
         ]); 
+**/        
 
     }
 }

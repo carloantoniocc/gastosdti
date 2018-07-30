@@ -11,8 +11,10 @@ class Moneda extends Model
     	'id','name',
     ];	
     
-    public function categoria(){
-		$this->belongTo('app\Categorie');
+    public function categoria()
+    {
+		return $this->belongTo(Categorie::class);
     }	
+
 
 }

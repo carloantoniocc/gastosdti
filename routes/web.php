@@ -21,6 +21,7 @@ Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('facturas/cmfacturas','FacturaController@cmfacturas');
 Route::post('facturas/importarfact', 'FacturaController@getimportarfact');
 Route::resource('facturas','FacturaController');
+Route::get('facturas/categoria/{categorie}, FacturaController@getItems');
 
 
 //carga importar uf

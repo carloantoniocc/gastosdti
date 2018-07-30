@@ -41,7 +41,9 @@
                                 <select id="categorie_id" class="form-control" name="categorie_id" required>
                                   <option value="">Seleccione Categoria</option>
                                   @foreach($categories as $categorie)
-                                    <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                                    @if ( $categorie->items->isNotEmpty() )
+                                        <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                                    @endif    
                                   @endforeach
                                 </select>
 
@@ -53,6 +55,20 @@
                                 
                             </div>
                         </div>
+
+                        <!--Lista de Items-->
+                        <div class="form-group">
+                            <label for="name" class="col-md-4 control-label">Items</label>
+
+                            <div class="col-md-6">
+                                <select id="#item" name="" class="form-control" multiple size="10" required>
+                                    @foreach($categories as $categorie)
+                                        <option value="{{ $categorie->id }}" selected>{{ $categorie->name }}</option>
+                                    @endforeach
+                                </select>    
+                            </div>
+                        </div>
+
 
 						<!--Campo numero-->
                         <div class="form-group{{ $errors->has('numero') ? ' has-error' : '' }}">

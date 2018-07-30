@@ -52,10 +52,10 @@
 									  @foreach($facturas as $factura)
 									  <tr>
 									  	<td>{{ $factura->numero }}</td>
-										<td>{{ $factura->proveedor }}</td>
+										<td>{{ $factura->provider->name }}</td>
 										<td>{{ $factura->fecha_recepcion }}</td>
 										<td>{{ $factura->monto }}</td>
-										<td>{{ $factura->categoria }}</td>
+										<td>{{ $factura->categorie->name }}</td>
 										<td>{{ $factura->notacredito }}</td>
 										<td>
 											@if( $factura->active == 1 )
@@ -73,8 +73,8 @@
 								</table>
 
 								<!--paginacion-->
-								{{ $facturas->appends(request()->input())->links() }}
 
+								{{ $facturas->appends(request()->input())->links() }}
 							@else
 								<h2>No existen Facturas</h2>
 				            @endif
@@ -83,8 +83,7 @@
 					</div>
 					<!-- FIN Lista de Comunas -->			
                 </div>
-
-                <div class="panel-footer">Total de Registros : {{  $facturas->total() }}</div>
+					<div class="panel-footer">Total de Registros : {{  $facturas->total() }}</div>
 
             </div>
         </div>

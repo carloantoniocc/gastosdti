@@ -12,5 +12,9 @@ class Provider extends Model
         'name',
     ];
 
+    public function facturas()
+    {
+    	return $this->hasMany(Factura::class);
+    }
 
 }

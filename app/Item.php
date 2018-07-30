@@ -9,7 +9,7 @@ class Item extends Model
     
     protected $fillable = ['id','name','active','categorie_id', ];
 
-    public function item()
+    public function categorie()
     {
         return $this->belongsTo(Categorie::class);
     }

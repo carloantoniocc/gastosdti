@@ -20,13 +20,13 @@ class Categorie extends Model
 
 
     public function moneda(){
-        $this->belongsTo('app\Moneda');
+        return $this->belongsTo(Moneda::class);
     }  
 
 
-    public function factura()
+    public function facturas()
     {
-        return $this->hasOne(Factura::class);
+        return $this->hasMany(Factura::class);
     }
 
 }

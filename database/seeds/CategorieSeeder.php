@@ -15,7 +15,7 @@ class CategorieSeeder extends Seeder
 
     	// para ejecutar seeder en particular
     	// php artisan db:seed --class=CategorieSeeder
-
+/**
         DB::table('categories')->insert([
             'name' => 'Entel Servicios',
             'active' => '1',  
@@ -45,7 +45,7 @@ class CategorieSeeder extends Seeder
             'descripcion' => 'Resumen lun'       
 
         ]);        
-
+**/
         //en caso de error  Unable to locate factory with name [default] [GastosDTI\Categorie].
         // se debe crear el factory
         //factory(Categorie::class, 20)->create();

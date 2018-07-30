@@ -25,23 +25,12 @@ class FacturaController extends Controller
  
         if (Auth::check()) 
         {
-
-            $facturas = DB::table('facturas')
-                        ->join('providers', 'facturas.provider_id', '=', 'providers.id')
-                        ->join('categories', 'facturas.categorie_id', '=', 'categories.id')
-                        ->select('facturas.id','facturas.numero','facturas.fecha_recepcion','facturas.monto','facturas.active','providers.name as proveedor','categories.name as categoria','facturas.montoresumen', 'facturas.notacredito')
-                        ->orderby('facturas.fecha_recepcion')
-                        ->paginate(20);
-
-
-            return view('facturas.index', [
-                'facturas'=> $facturas
-            ]);
-            
+            $facturas = Factura::paginate();
+            return view('facturas.index', compact('facturas'));
         }else{
-
             return view('auth/login');
         }
+
     }
 
     /**
@@ -66,6 +55,22 @@ class FacturaController extends Controller
         }
     }
 
+
+    public static function getItems(Categorie $categorie)
+    {
+        dd($categorie);
+        if ( $request->ajax() ){
+            $items = Item::find($categorie->items);
+
+            return response()->json($items);
+
+        }
+
+
+        return Item::where('categorie_id', $id)->get();
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -89,19 +94,6 @@ class FacturaController extends Controller
             ]);
 
             
-
-            $categorie = Categorie::find($request->input('categorie_id'));
-            $items = $categorie->items;
-
-            $validator->after(function ($validator) use ($request,$items){
-             
-                if (count($items) == 0 ){
-                    $validator->errors()->add('categorie_id', 'Categoria no posee items, favor ingresar.');                
-                }
-
-            });    
-
-
             if ($validator->fails()){
 
                 return redirect('facturas/create')
@@ -118,6 +110,9 @@ class FacturaController extends Controller
                     $factura->fecha_recepcion =  $request->input('fecha_recepcion');
                     $factura->monto =  $request->input('monto');
                     $factura->active =  $request->input('active');
+
+                    $categorie = Categorie::find($request->input('categorie_id'));
+                    $items = $categorie->items;
 
 
                     if($factura->save()){
