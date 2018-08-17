@@ -36,17 +36,18 @@
 							<table class="table table-striped">
 								<thead>
 								  <tr>
-									<th>Rut</th>
 									<th>Nombre</th>
+									<th>Rut</th>
 									<th>Estado</th>
 									<th>Editar</th>
+									<th>Asignar</th>
 								  </tr>
 								</thead>
 								<tbody>
 								  @foreach($providers as $provider)
 								  <tr>
-									<td>{{ $provider->rut }}</td>
 									<td>{{ $provider->name }}</td>
+									<td>{{ $provider->rut }}</td>									
 									<td>
 										@if( $provider->active == 1 )
 											Activo
@@ -55,6 +56,7 @@
 										@endif
 									</td>
 									<td><a href="{{ URL::to('providers/' . $provider->id . '/edit') }}">Editar</a></td>
+									<td><a href="{{ URL::to('providers/asignCategorie/' . $provider->id ) }}">Categorias</a></td>
 								  </tr>
 								  @endforeach
 								</tbody>

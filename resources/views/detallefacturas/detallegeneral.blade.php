@@ -17,7 +17,7 @@
 	@endif
 	<!--FIN Mensajes de Guardado o Actualización de Comunas-->
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-8 col-md-offset-2">
 
 
 			<ol class="breadcrumb">
@@ -27,56 +27,111 @@
 
 
             <div class="panel panel-default">
-                <div class="panel-heading">Resumen Factura ( {{ $factura->numero }} )</div>
+                <div class="panel-heading"><h4><strong> {{ $factura->provider->name }}</strong></h4></div>
                 <div class="panel-body">
                     {{ csrf_field() }} 
 
-	
-					<div class="row">
+					<div class="row container">
+
+
 						<div class="col-md-12">
-							<table class="table table-bordered">
-								<thead >
-								  <tr >
-								  	<th class="info text-center">ACCIONES<br> </th>
-								  	<th class="warning text-center">DETALLE DE FACTURA MENSUAL<br> </th>
-									<th class="warning text-center">RESUMEN DE PUNTOS<br> </th>
-									<th class="warning text-center">TARIFICACIÓN POR PUNTO <br>(Valores en UF$ IVA Incl.)</th>
-									<th class="warning text-center">TOTAL <br>(Valores en UF$ IVA Incl.)</th>
+							
+							<h4> {{ $factura->categorie->name }}</h4>
+							
 
-								  </tr>
-								</thead>
-								<tbody>
+						</div>	
 
+						<div class="col-md-4 table-responsive">
+						
 
-									@foreach ($resumenfacturacion as $resumenfactura)
-								    <tr>
-								    	<td><a href="{{ URL::to('uploadsfactura/' . $resumenfactura->idresumen .'/upload') }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-import" ><span></a>
-										<a href="{{ URL::to('detallefacturas/' . $resumenfactura->idresumen . '/detalleitem'  ) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" ><span></a>
+								<table class="table  table-striped table-sm">
+									<thead>
+										<tr>
+											
+											
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Rut proveedor</td>
+											<td>{{ $factura->provider->rut }}</td>
 
-								    	</td>
+										</tr>
 
-								  		<td><a href="{{ URL::to('detallefacturas/' . $resumenfactura->idresumen . '/detalleitem'  ) }}">{{ $resumenfactura->item }}</a></td>
-								  		<td class="text-right">{{ $resumenfactura->cantidad }}</td>
-								  		<td class="text-right"></td>
-								  		<td class="text-right">{{ $resumenfactura->total }}</td>
-								    </tr>
-
-									@endforeach
+										<tr>
+											<td>Nro. Factura   </td>
+											<td>{{ $factura->numero }} </td>
 
 
-									<tr>
-										<td class="info" colspan="4">TOTAL</td>
-										<td class="info text-right">UF$ {{ $factura->monto }}</td>
-									</tr>
+										</tr>
+
+										<tr>
+											<td>Tipo de Moneda </td>
+											<td></td>
 
 
-								</tbody>
-							</table>
+										</tr>	
+
+
+									</tbody>
+								</table>
+						</div>
+					</div>				
+	
+
+
+					<div class="row container">
+						<div class="col-md-12" >
+							
+								<table class="table table-bordered border-collapse">
+									<thead >
+									  <tr>
+									  	<th colspan="2" class="warning text-center">Acciones </th>
+									  	<th class="warning text-center ">Detalle de factura mensual </th>
+										<th class="warning text-center ">Resumen de puntos </th>
+										<th class="warning text-center ">Tarificacion por punto </th>
+										<th class="warning text-center">Total </th>
+
+									  </tr>
+									</thead>
+									<tbody>
+
+
+										@foreach ($resumenfacturacion as $resumenfactura)
+									    <tr>
+									    	<td><a href="{{ URL::to('uploadsfactura/' . $resumenfactura->idresumen .'/upload') }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-import" ><span></a>
+									    	</td>
+											
+											<td class="text-left "><a href="{{ URL::to('detallefacturas/' . $resumenfactura->idresumen . '/detalleitem'  ) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" ><span></a>
+											</td>
+
+
+									  		<td><a href="{{ URL::to('detallefacturas/' . $resumenfactura->idresumen . '/detalleitem'  ) }}">{{ $resumenfactura->item }}</a></td>
+									  		<td class="text-right ">{{ $resumenfactura->cantidad }}</td>
+									  		<td class="text-right "></td>
+									  		<td class="text-right">{{ $resumenfactura->total }}</td>
+									    </tr>
+
+										@endforeach
+
+
+										<tr>
+											<td class="info" colspan="2">TOTAL</td>
+											<td class="info " ></td>
+											<td class="info " ></td>
+											<td class="info " ></td>
+											<td class="info text-right">UF$ {{ $factura->monto }}</td>
+										</tr>
+
+
+									</tbody>
+								</table>
 
 						</div>
 					</div>
 
                 </div>
+                <div class="panel-footer">Id Registro : {{  $factura->id }}</div>
             </div>
 
         </div>

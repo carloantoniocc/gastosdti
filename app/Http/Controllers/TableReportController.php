@@ -30,7 +30,7 @@ class TableReportController extends Controller
 
     public function getEstablecimientos(Request $request,$id)
     {
-        
+
         if ($request->ajax()){
 
             $establecimientos = Establecimiento::select('id','name','comuna_id','active')->where('comuna_id', '=', $id)

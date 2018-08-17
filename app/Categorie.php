@@ -3,9 +3,12 @@
 namespace GastosDTI;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Categorie extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'categories';
 
     protected $fillable = [
@@ -28,5 +31,13 @@ class Categorie extends Model
     {
         return $this->hasMany(Factura::class);
     }
+
+    public function providers()
+    {
+        return $this->belongsToMany(Provider::class, 'categorie_provider')->withPivot('provider_id');
+    }
+
+
+
 
 }

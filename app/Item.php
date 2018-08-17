@@ -19,9 +19,9 @@ class Item extends Model
         return $this->belongsTo(Storage::class);
     }
 
-    public function resumenfacturacion()
+    public function factura()
     {
-        return $this->hasOne(ResumenFacturacion::class);
+        return $this->belongsToMany(Factura::class, 'resumen_facturas')->withPivot('factura_id');
     }
 
 

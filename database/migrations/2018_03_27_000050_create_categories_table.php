@@ -20,6 +20,7 @@ class CreateCategoriesTable extends Migration
             $table->boolean('active')->default(true);
 
             $table->integer('moneda_id')->nullable()->unsigned();
+            $table->softDeletes();
             $table->timestamps();            
 
             $table->foreign('moneda_id')->references('id')->on('monedas')->onUpdate('cascade')->onDelete('cascade');             

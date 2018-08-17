@@ -16,13 +16,31 @@
 //CAMBIA VISTA LOGIN COMO INICIO DE SITIO
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 
+//RUTAS ADMINISTRACION DE USUARIOS
+Route::resource('users','UsersController');
 
-//RUTA FACTURAS
+//RUTAS ASIGNAR ROLES
+Route::get('users/asignRole/{user}', 'UsersController@asignRole');
+Route::post('users/saveRole', 'UsersController@saveRole');
+
+//RUTAS ASIGNAR ESTABLECIMIENTOS
+Route::get('users/asignEstab/{user}', 'UsersController@asignEstab');
+Route::post('users/saveEstab', 'UsersController@saveEstab');
+
+//Rutas de facturas
+Route::resource('facturas','FacturaController');
+Route::get('facturas/categoria/{categorie}', 'FacturaController@getItems');
+Route::get('facturas/provider/{provider}', 'FacturaController@getCategories');
+
+
 Route::get('facturas/cmfacturas','FacturaController@cmfacturas');
 Route::post('facturas/importarfact', 'FacturaController@getimportarfact');
-Route::resource('facturas','FacturaController');
-Route::get('facturas/categoria/{categorie}, FacturaController@getItems');
 
+
+//Provider
+Route::resource('providers','ProviderController');
+Route::get('/providers/asignCategorie/{provider}', 'ProviderController@asignCategorie');
+Route::post('/providers/asignCategorie', 'ProviderController@saveCategorie');
 
 //carga importar uf
 Route::post('dolars/importar', 'DolarController@postimportar');
@@ -44,16 +62,7 @@ Auth::routes();
 //RUTA DE VISTA, UNA VEZ QUE SE ESTA LOGUEADO
 Route::get('/home', 'HomeController@index');
 
-//RUTAS ADMINISTRACION DE USUARIOS
-Route::resource('users','UsersController');
 
-//RUTAS ASIGNAR ROLES
-Route::get('users/asignRole/{user}', 'UsersController@asignRole');
-Route::post('users/saveRole', 'UsersController@saveRole');
-
-//RUTAS ASIGNAR ESTABLECIMIENTOS
-Route::get('users/asignEstab/{user}', 'UsersController@asignEstab');
-Route::post('users/saveEstab', 'UsersController@saveEstab');
 
 //RUTAS TIPO ESTABLECIMIENTO
 Route::resource('tipoEstabs','TipoEstabsController');
@@ -78,15 +87,14 @@ Route::get('detallefacturas/{idresumenfactura}/detalleitem','DetalleFacturaContr
 //Api
 Route::get('api/v1/facturas','FacturaController@getfacturas');
 
-//Provider
-Route::resource('providers','ProviderController');
+
 
 //Categorie
 
 
 Route::resource('categories','CategorieController');
 //Route::get('categories/{id}/crearitem','CategorieController@crearitem');
-Route::get('categories/showcategorie/{id}','CategorieController@showcategorie');
+Route::get('categories/showcategorie/{categorie}','CategorieController@showcategorie');
 Route::get('categories/edit/item/{id}','CategorieController@edititem');
 Route::post('categories/update/item/{id}', 'CategorieController@postupdateitem');
 

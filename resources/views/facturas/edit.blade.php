@@ -12,45 +12,70 @@
 			<!--FIN BreadCrumb-->
 			<!--Panel Formulario Editar Comuna-->
             <div class="panel panel-default">
-                <div class="panel-heading">Editar Factura ( {{$factura->numero }} )</div>
+                <div class="panel-heading">Editar Nro. Factura ( {{$factura->numero }} )</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="/facturas/{{$factura->id}}">
                         <input type="hidden" name="_method" value="PUT">
 						{{ csrf_field() }}
 
+
+
                         <!--Campo Proveedor-->
-                        <div class="form-group{{ $errors->has('proveedor') ? ' has-error' : '' }}">
-                            <label for="proveedor" class="col-md-4 control-label">Proveedor</label>
+                        <div class="form-group{{ $errors->has('jsonprovider_id') ? ' has-error' : '' }}">
+                          <label for="jsonprovider_id" class="col-md-4 control-label">Proveedor</label>
 
                             <div class="col-md-6">
-                                <input id="numero" type="text" class="form-control" disabled name="numero" value="{{$provider->name}}" required autofocus>
-                                
+                                  <select id="jsonprovider_id" class="form-control" name="jsonprovider_id" required>
+                                    @foreach($providers as $provider)
+                                        @if ($provider->id == $factura->provider_id)
+                                            <option value="{{ $provider->id }}" selected="">{{ $provider->name }}</option>
+                                        @else
+                                            <option value="{{ $provider->id }}">{{ $provider->name }}</option>   
+                                        @endif    
+                                    @endforeach        
+                                  </select> 
+                            </div>
+                        </div>  
 
-                                @if ($errors->has('proveedor'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('proveedor') }}</strong>
-                                    </span>
-                                @endif
+
+                        <!--Campo Categoria-->
+                        <div class="form-group{{ $errors->has('jsoncategorie_id') ? ' has-error' : '' }}">
+                          <label for="json_categorie_id" class="col-md-4 control-label">Categoria</label>
+
+                            <div class="col-md-6">
+                                  <select id="jsoncategorie_id" class="form-control" name="jsoncategorie_id" required>
+                                    @foreach ($factura->provider->categories as $categorie)
+                                        @if ($categorie->id == $factura->categorie_id)
+                                            <option value="{{ $categorie->id }}" selected="">{{ $categorie->name }}</option>
+                                        @else
+                                            <option value="{{ $categorie->id }}" >{{ $categorie->name }}</option>
+                                        @endif    
+                                    @endforeach
+                                  </select> 
+                            </div>
+                        </div>  
+
+
+                        <!--Campo Items-->
+                        <div class="form-group">
+                            <label for="name" class="col-md-4 control-label">Seleccione Items</label>
+
+                            <div class="col-md-6">
+                                <select id="items" name="items[]" class="form-control" multiple size="10" required>
+                                    @foreach ($factura->categorie->items as $item)
+                                        @if ($factura->IsItem($item->name))
+                                            <option value="{{ $item->id }}" selected="">{{ $item->name }}</option>
+                                        @else
+                                            <option value="{{ $item->id }}" >{{ $item->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>    
                             </div>
                         </div>
 
-                        <!--Campo Categoria -->
-                        <div class="form-group{{ $errors->has('categoria') ? ' has-error' : '' }}">
-                            <label for="categoria" class="col-md-4 control-label">Categoria</label>
 
 
-                            <div class="col-md-6">
-                                <input id="numero" type="text" class="form-control" disabled name="numero" value="{{$categorie->name}}" required autofocus>
-
-                                @if ($errors->has('categoria'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('categoria') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-						<!--Numero de Factura-->
+                        <!--Numero de Factura-->
                         <div class="form-group{{ $errors->has('numero') ? ' has-error' : '' }}">
                             <label for="numero" class="col-md-4 control-label">Numero Factura</label>
 
@@ -64,6 +89,8 @@
                                 @endif
                             </div>
                         </div>
+
+
 
 
                         <!--Campo fecha_recepcion-->
@@ -142,6 +169,7 @@
                         </div>
                     </form>
                 </div>
+                <div class="panel-footer">Id Registro : {{  $factura->id }}</div>
             </div>
 			<!--FIN Panel Formulario Editar Comuna-->
         </div>

@@ -37,11 +37,11 @@
 								<table class="table table-striped">
 									<thead>
 									  <tr>
-									  	<th>Numero Factura</th>
-										<th>Proveedor</th>
+									  	<th>id</th>
+									  	<th>Nro. Factura</th>
+										<th>Proveedor / Categoria</th>
 										<th>Fecha Recepcion</th>
 										<th>Monto</th>
-										<th>Categoria</th>
 										<th>Nota de Credito</th>																		
 										<th>Estado</th>
 										<th>Editar</th>
@@ -51,11 +51,11 @@
 									<tbody>
 									  @foreach($facturas as $factura)
 									  <tr>
-									  	<td>{{ $factura->numero }}</td>
-										<td>{{ $factura->provider->name }}</td>
+									  	<td>{{ $factura->id }}</td>
+									  	<td align="left">{{ $factura->numero }}</td>
+										<td>{{ $factura->provider->name }} - <i>{{ $factura->categorie->name }} </i> </td>
 										<td>{{ $factura->fecha_recepcion }}</td>
 										<td>{{ $factura->monto }}</td>
-										<td>{{ $factura->categorie->name }}</td>
 										<td>{{ $factura->notacredito }}</td>
 										<td>
 											@if( $factura->active == 1 )

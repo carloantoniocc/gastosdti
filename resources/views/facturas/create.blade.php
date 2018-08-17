@@ -23,7 +23,7 @@
                             <label for="provider_id" class="col-md-4 control-label">Proveedor</label>
 
                             <div class="col-md-6">
-                                <select id="provider_id" class="form-control" name="provider_id" required>
+                                <select id="jsonprovider_id" class="form-control" name="jsonprovider_id" required>
                                   <option value="">Seleccione Proveedor</option>
                                   @foreach($providers as $provider)
                                     <option value="{{ $provider->id }}">{{ $provider->name }}</option>
@@ -34,22 +34,17 @@
 
 
                         <!--Lista Categorias-->
-                        <div class="form-group{{ $errors->has('categorie_id') ? ' has-error' : '' }}">
-                            <label for="categorie_id" class="col-md-4 control-label">Categoria</label>
+                        <div class="form-group{{ $errors->has('categorie') ? ' has-error' : '' }}">
+                            <label for="categorie" class="col-md-4 control-label">Categoria</label>
 
                             <div class="col-md-6">
-                                <select id="categorie_id" class="form-control" name="categorie_id" required>
-                                  <option value="">Seleccione Categoria</option>
-                                  @foreach($categories as $categorie)
-                                    @if ( $categorie->items->isNotEmpty() )
-                                        <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
-                                    @endif    
-                                  @endforeach
+                                <select id="jsoncategorie_id" class="form-control" name="jsoncategorie_id" required>
+
                                 </select>
 
-                                @if ($errors->has('categorie_id'))
+                                @if ($errors->has('jsoncategorie_id'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('categorie_id') }}</strong>
+                                        <strong>{{ $errors->first('jsoncategorie_id') }}</strong>
                                     </span>
                                 @endif
                                 
@@ -58,13 +53,11 @@
 
                         <!--Lista de Items-->
                         <div class="form-group">
-                            <label for="name" class="col-md-4 control-label">Items</label>
+                            <label for="name" class="col-md-4 control-label">Seleccione Items</label>
 
                             <div class="col-md-6">
-                                <select id="#item" name="" class="form-control" multiple size="10" required>
-                                    @foreach($categories as $categorie)
-                                        <option value="{{ $categorie->id }}" selected>{{ $categorie->name }}</option>
-                                    @endforeach
+                                <select id="items" name="items[]" class="form-control" multiple size="10" required>
+                                    
                                 </select>    
                             </div>
                         </div>
@@ -160,5 +153,7 @@
         </div>
     </div>
 </div>
+
+
 @endsection
 

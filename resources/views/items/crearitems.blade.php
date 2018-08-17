@@ -45,15 +45,13 @@
 								<thead>
 								  <tr>
 									<th>Nombre</th>
-									<th>Tipo de Carga</th>
 									<th>Estado</th>
 								  </tr>
 								</thead>
 								<tbody>
-								  @foreach($items as $item)
+								  @foreach($categorie->items as $key => $item)
 								  <tr>
 									<td>{{ $item->name }}</td>
-									<td>{{ $item->storage }}</td>
 									<td>
 										@if( $item->active == 1 )
 											Activo
@@ -66,8 +64,7 @@
 								  @endforeach
 								</tbody>
 							</table>
-							<!--paginacion-->
-							{{ $items->links() }}
+
 						</div>
 					</div>
 					<!-- FIN Lista de Comunas -->			

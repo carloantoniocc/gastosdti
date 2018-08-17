@@ -173,29 +173,13 @@ class CategorieController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \GastosDTI\Categorie  $categorie
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Categorie $categorie)
-    {
-        //
-    }
 
-
-    public function showcategorie($id)
+    public function showcategorie(Categorie $categorie)
     {
         
-        $items = DB::table('categories')
-        ->join('items', 'items.categorie_id','=','categories.id')
-        ->join('storages','storages.id','=','items.storage_id')
-        ->select('items.id as id','items.name as name', 'items.active as active', 'categories.name as categoria','storages.name as storage')->paginate();
+        $items = $categorie->items;
+        return view('items.crearitems', compact('categorie'));
 
-        $categorie = Categorie::find($id);
-
-        return view('items.crearitems', compact('items','categorie'));
     }    
 
 

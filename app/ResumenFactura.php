@@ -14,4 +14,10 @@ class ResumenFactura extends Model
     ]; 
 
 
+    public function factura(){
+        return $this->belongsTo(Factura::class);
+    }  
+
+
+
 }

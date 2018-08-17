@@ -3,6 +3,7 @@
 namespace GastosDTI\Http\Controllers;
 
 use GastosDTI\Provider;
+use GastosDTI\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,11 +20,12 @@ class ProviderController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $providers = Provider::select('id','name','rut','active')->orderBy('name')->paginate(10);
-            
+
+            $providers = Provider::paginate(10);
             return view('providers.index',compact('providers'));
-        }
-        else {
+
+        }else{
+
             return view('auth/login');
         }
     }
@@ -159,4 +161,38 @@ class ProviderController extends Controller
     {
         //
     }
+
+
+    public function asignCategorie(Provider $provider)
+    {
+        $categories = Categorie::all();
+        return view('providers.asignCategorie',compact('provider','categories'));
+    }
+
+
+    public function saveCategorie(Request $request)
+    {
+
+        if (Auth::check()) {
+            $provider_id = $request->input('provider_id');
+
+            $provider = Provider::find($provider_id);
+
+            //carga categories a proveedores
+            $categories = $request->input('categoriasProveedor');
+
+            $provider->categories()->sync($categories);
+                        
+            return redirect('/providers')->with('message','providers');
+        }
+        else {
+            return view('auth/login');
+        }
+
+
+    }
+
+
+
+
 }
