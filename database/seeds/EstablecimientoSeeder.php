@@ -29,7 +29,7 @@ class EstablecimientoSeeder extends Seeder
             'updated_at' => '2017-05-13 03:00:00'
         ]);
 
-    	factory(Establecimiento::class,50)->create();
+    	//factory(Establecimiento::class,50)->create();
 
 
     }

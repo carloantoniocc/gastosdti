@@ -3,10 +3,14 @@
 namespace GastosDTI;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class ResumenFactura extends Model
 {
    
+    use SoftDeletes;   
+    
     protected $table = 'resumen_facturas';
 
     protected $fillable = [
@@ -18,6 +22,12 @@ class ResumenFactura extends Model
         return $this->belongsTo(Factura::class);
     }  
 
+    public function item()
+    {
+    	return $this->belongsTo(Item::class);
+    }
+
+    
 
 
 }

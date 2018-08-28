@@ -25,4 +25,6 @@ class DetalleFactura extends Model
         $this->belongsto('app\establecimiento');
     }
 
+        
+
 }

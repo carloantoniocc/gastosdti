@@ -6,6 +6,7 @@ use GastosDTI\Provider;
 use GastosDTI\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use GastosDTI\Rut;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -56,30 +57,20 @@ class ProviderController extends Controller
 
         if (Auth::check()) {
             // validate
-            $validator = validator::make($request->all(), [
+            $this->validate($request, [
                 'name' => 'required|string|max:150|unique:providers',
             ]);
+
+                    $provider = new Provider;
+                    $provider->name = $request->input('name');
+                    $provider->rut = $request->input('rut');
+                    $provider->active = $request->input('active');
+                    $provider->save();            
+
+                    return redirect('/providers')->with('message','store');
+
+        }else{
             
-            if ($validator->fails()) {
-                return redirect('providers/create')
-                            ->withErrors($validator)
-                            ->withInput();
-            }
-            else {
-
-
-                $provider = new Provider;
-
-                $provider->name = $request->input('name');
-                $provider->rut = $request->input('rut');
-                $provider->active = $request->input('active');
-            
-                $provider->save();            
-
-                return redirect('/providers')->with('message','store');
-            }
-        }
-        else {
             return view('auth/login');
         }
     }
@@ -127,6 +118,7 @@ class ProviderController extends Controller
             // validate
             $validator = validator::make($request->all(), [
                 'name' => 'required|string|max:150|unique:providers,name,'.$provider->id,
+                'rut'  => 'required|string|max:10',
             ]);
             
             if ($validator->fails()) {
@@ -191,8 +183,5 @@ class ProviderController extends Controller
 
 
     }
-
-
-
 
 }

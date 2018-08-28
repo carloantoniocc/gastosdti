@@ -36,6 +36,7 @@
 							<table class="table table-striped">
 								<thead>
 								  <tr>
+								  	<th>Id</th>
 									<th>Nombre</th>
 									<th>Rut</th>
 									<th>Estado</th>
@@ -46,6 +47,7 @@
 								<tbody>
 								  @foreach($providers as $provider)
 								  <tr>
+								  	<td>{{ $provider->id }}</td>
 									<td>{{ $provider->name }}</td>
 									<td>{{ $provider->rut }}</td>									
 									<td>
@@ -67,6 +69,7 @@
 					</div>
 					<!-- FIN Lista de Comunas -->			
                 </div>
+                <div class="panel-footer">Total de Registros : {{  $providers->total() }}</div>
             </div>
         </div>
     </div>

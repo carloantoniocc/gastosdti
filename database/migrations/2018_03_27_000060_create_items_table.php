@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->boolean('active');
             $table->integer('storage_id')->unsigned(); 
+            $table->softDeletes();
             $table->timestamps();
             
             $table->foreign('storage_id')->references('id')->on('storages')->onUpdate('cascade')->onDelete('cascade');             

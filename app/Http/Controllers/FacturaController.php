@@ -148,6 +148,7 @@ class FacturaController extends Controller
     public function edit(Factura $factura)
     {
 
+
         if (Auth::check()) {
 
             $providers = Provider::has('categories')->get();
@@ -192,6 +193,7 @@ class FacturaController extends Controller
 
             $items = $request->input('items');
             $factura->items()->sync($items);
+
 
             return redirect('/facturas')->with('message','update');  
 

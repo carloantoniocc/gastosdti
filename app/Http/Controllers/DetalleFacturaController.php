@@ -25,13 +25,6 @@ class DetalleFacturaController extends Controller
 {
 
 
-    public function index()
-    {
-
-       return view('detallefacturas.index');
-    }
-
-
     public function create(Request $request)
     {
         
@@ -75,15 +68,9 @@ class DetalleFacturaController extends Controller
     }
 
 
-    public function show(DetalleFactura $detalleFactura)
-    {
-        //
-    }
-
-
     public function edit(DetalleFactura $detalleFactura, $id)
     {
-        dd($detalleFactura);
+
         if (Auth::check()) {
             $detallefactura = DetalleFactura::find($id);
             $comunas = Comuna::select('id','name','active')->orderBy('name')->get();
@@ -120,29 +107,28 @@ class DetalleFacturaController extends Controller
 
     }
 
-    public function destroy(DetalleFactura $detalleFactura)
-    {
-        //
-    }
 
 
     public function detallegeneral(Factura $factura)
     {
 
-        $categorie = $factura->categorie;
-        $items = $categorie->items;
+        if (Auth::check()) {
 
-        $resumenfacturacion = DB::table('resumen_facturas')
-            ->join('items','items.id','=','resumen_facturas.item_id')
-            ->where('resumen_facturas.factura_id','=', $factura->id)
-            ->select('resumen_facturas.id as idresumen','items.name as item', 'items.id as iditem' ,'resumen_facturas.resumen as cantidad', 'resumen_facturas.monto as total', 'resumen_facturas.factura_id as factura_id' )->orderBy('items.name')
-            ->get();
+            return view('detallefacturas.detallegeneral',compact('factura'));      
 
-  
-        return view('detallefacturas.detallegeneral',compact('factura','categorie','items','resumenfacturacion'));      
+        } else {
+            return view('auth/login');
+        }
 
     }
     
+
+    public function detalledelete(ResumenFactura $resumenfactura)
+    {
+        dd($resumenfactura);
+
+    }
+
     public function detalleitem($idresumenfactura)
     {
 

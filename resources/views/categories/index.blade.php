@@ -36,18 +36,24 @@
 							<table class="table table-striped">
 								<thead>
 								  <tr>
+								  	<th>Id</th>
 									<th>Nombre</th>
 									<th>Tipo de Moneda</th>
+									<th>Encabezado 1</th>
+									<th>Encabezado 2</th>
 									<th>Estado</th>
 									<th>Editar</th>
-									<th>Ver Items Asociados</th>
+									<th>Items Asociados</th>
 								  </tr>
 								</thead>
 								<tbody>
 								  @foreach($categories as $categorie)
 								  <tr>
+								  	<td>{{ $categorie->id }}</td>
 									<td>{{ $categorie->name }}</td>
-									<td class = "text-left">{{ $categorie->moneda }}</td>
+									<td class = "text-left">{{ $categorie->moneda->name }}</td>
+									<td>{{ $categorie->titulo1 }}</td>
+									<td>{{ $categorie->titulo2 }}</td>
 									<td>
 										@if( $categorie->active == 1 )
 											Activo
@@ -65,7 +71,7 @@
 							{{ $categories->links() }}
 						</div>
 					</div>
-					<!-- FIN Lista de Comunas -->			
+					<div class="panel-footer">Total de Registros : {{  $categories->total() }}</div>	
                 </div>
             </div>
         </div>

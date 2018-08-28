@@ -15,126 +15,97 @@
 			Factura Modificada Exitosamente
 		</div>
 	@endif
-	<!--FIN Mensajes de Guardado o Actualización de Comunas-->
+	<!--FIN Mensajes de Guardado o Actualización de detalles-->
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-
-
 			<ol class="breadcrumb">
 			  <li><a href="/facturas">Lista de Facturas</a></li>
 			  <li class="active">Resumen Factura</li>
 			</ol>
-
 
             <div class="panel panel-default">
                 <div class="panel-heading"><h4><strong> {{ $factura->provider->name }}</strong></h4></div>
                 <div class="panel-body">
                     {{ csrf_field() }} 
 
-					<div class="row container">
-
-
-						<div class="col-md-12">
-							
+					<div class="col-md-12 row container">
 							<h4> {{ $factura->categorie->name }}</h4>
-							
-
-						</div>	
-
-						<div class="col-md-4 table-responsive">
-						
-
-								<table class="table  table-striped table-sm">
+					</div>
+					
+					<div class="col-md-4 row container">
+						<div class="table-responsive">
+								<table class="table table-striped table-sm">
 									<thead>
-										<tr>
-											
-											
-										</tr>
+										<tr></tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td>Rut proveedor</td>
 											<td>{{ $factura->provider->rut }}</td>
-
 										</tr>
-
 										<tr>
 											<td>Nro. Factura   </td>
 											<td>{{ $factura->numero }} </td>
-
-
 										</tr>
-
 										<tr>
 											<td>Tipo de Moneda </td>
-											<td></td>
-
-
+											<td>{{ $factura->categorie->moneda->name }}</td>
 										</tr>	
-
-
 									</tbody>
 								</table>
 						</div>
-					</div>				
-	
+					</div>	
 
+                    <div class="col-md-12 row container">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-condensed">
+                                <thead>
+								  <tr>
+								  	<th class="warning text-center ">Items de Factura </th>
+									<th class="warning text-center ">{{ $factura->categorie->titulo1 }}</th>
+									<th class="warning text-center ">{{ $factura->categorie->titulo2 }}</th>
+									<th class="warning text-center">Total </th>
+									<th class="warning text-center" >Acciones </th>
 
-					<div class="row container">
-						<div class="col-md-12" >
-							
-								<table class="table table-bordered border-collapse">
-									<thead >
-									  <tr>
-									  	<th colspan="2" class="warning text-center">Acciones </th>
-									  	<th class="warning text-center ">Detalle de factura mensual </th>
-										<th class="warning text-center ">Resumen de puntos </th>
-										<th class="warning text-center ">Tarificacion por punto </th>
-										<th class="warning text-center">Total </th>
+								  </tr>
+                                </thead>
+                                <tbody>
 
-									  </tr>
-									</thead>
-									<tbody>
-
-
-										@foreach ($resumenfacturacion as $resumenfactura)
+									@foreach ($factura->resumenfacturas as $resumenfactura)
 									    <tr>
-									    	<td><a href="{{ URL::to('uploadsfactura/' . $resumenfactura->idresumen .'/upload') }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-import" ><span></a>
+									  		<td><a href="{{ URL::to('detallefacturas/' . $resumenfactura->id . '/detalleitem'  ) }}">{{ $resumenfactura->item->name }}</a></td>
+									  		<td class="text-right">{{ $resumenfactura->resumen }}</td>
+									  		<td class="text-right">{{ $resumenfactura->resumen2 }}</td>
+									  		<td class="text-right">{{ $resumenfactura->monto }}</td>
+											<td class="text-center">
+												<a href="{{ URL::to('uploadsfactura/' . $resumenfactura->id .'/upload') }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Importar Datos"><span class="glyphicon glyphicon-import" ><span></a> 
+
+												<a href="{{ URL::to('detallefacturas/' . $resumenfactura->id . '/detalledelete'  ) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Contenido de Item"><span class="glyphicon glyphicon-trash" ><span></a>
+
 									    	</td>
-											
-											<td class="text-left "><a href="{{ URL::to('detallefacturas/' . $resumenfactura->idresumen . '/detalleitem'  ) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-search" ><span></a>
-											</td>
 
-
-									  		<td><a href="{{ URL::to('detallefacturas/' . $resumenfactura->idresumen . '/detalleitem'  ) }}">{{ $resumenfactura->item }}</a></td>
-									  		<td class="text-right ">{{ $resumenfactura->cantidad }}</td>
-									  		<td class="text-right "></td>
-									  		<td class="text-right">{{ $resumenfactura->total }}</td>
 									    </tr>
 
-										@endforeach
-
+									@endforeach
 
 										<tr>
-											<td class="info" colspan="2">TOTAL</td>
+											<td class="info" >TOTAL</td>
 											<td class="info " ></td>
 											<td class="info " ></td>
-											<td class="info " ></td>
-											<td class="info text-right">UF$ {{ $factura->monto }}</td>
+											
+											<td class="info text-right">{{ $factura->categorie->moneda->name }} {{ $factura->monto }}</td>
 										</tr>
+                                </tbody>
 
+                            </table>
+                        </div>
+                    </div>
 
-									</tbody>
-								</table>
-
-						</div>
-					</div>
-
-                </div>
-                <div class="panel-footer">Id Registro : {{  $factura->id }}</div>
+				</div>
+				<div class="panel-footer">Id Registro : {{  $factura->id }}</div>
             </div>
-
         </div>
     </div>
 </div>
+
 @endsection

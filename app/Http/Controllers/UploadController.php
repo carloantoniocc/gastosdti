@@ -22,6 +22,8 @@ class UploadController extends Controller
     public function upload(ResumenFactura $resumenfactura)
     {
 
+        //dd($resumenfactura->categorie);
+
         $factura = Factura::find($resumenfactura->factura_id);
         $item = Item::find($resumenfactura->item_id);   
         $storage = $item->storage;
@@ -34,12 +36,9 @@ class UploadController extends Controller
     public function importar(Request $request,ResumenFactura $resumenfactura)
     {
 
-        $item = Item::find($resumenfactura->item_id);
-        $codigo = $item->storage->codigo;
-
-        switch ($codigo) {
+        switch ($resumenfactura->item->storage->codigo) {
             case 'STG01':
-                return $this->stg01($request,$resumenfactura,$item);
+                return $this->stg01($request,$resumenfactura,$resumenfactura->item);
                 break;
             case 'STG02':
                 return $this->stg02($request,$resumenfactura,$item);
@@ -54,7 +53,6 @@ class UploadController extends Controller
 
     public function stg01(Request $request, ResumenFactura $resumenfactura,Item $item)
     {
-
 
         $validator = validator::make($request->all(), [
             'file' => 'max:5000',
@@ -75,9 +73,9 @@ class UploadController extends Controller
             
             $excelCheckRows = Excel::selectSheetsByIndex(0)->load($file, function($reader){ $reader->formatDates(true, 'Y-m-d'); })->limit(300, 0)->limitColumns(4, 0)->get();
 
-            $totalitem = 0;
-            $cantidaditem = 0;
-            $tarifaitem = 0;
+            $total = 0;
+            $titulo1 = 0;
+            $titulo2 = 0;
 
             foreach ($excelCheckRows as $key => $value) {
                 
@@ -114,18 +112,19 @@ class UploadController extends Controller
                     $excelEsValido++;                    
                 } 
 
-                $totalitem += $value->total;
-                $cantidaditem += $value->cantidad;
-                $tarifaitem = $value->valorunitario;
+                
+                $titulo1 += $value->cantidad;
+                $titulo2 += $value->valorunitario;
+                $total += $value->total;
             }    
 
 
             if ($excelEsValido == 0)
             {
 
-
-                $resumenfactura->resumen =  $cantidaditem;
-                $resumenfactura->monto = $totalitem;
+                $resumenfactura->resumen =  $titulo1;
+                $resumenfactura->resumen2 =  $titulo2;
+                $resumenfactura->monto = $total;
                 $resumenfactura->save();
 
 

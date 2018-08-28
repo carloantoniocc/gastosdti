@@ -63,7 +63,7 @@
                             <div class="col-md-6">
                                 <select id="items" name="items[]" class="form-control" multiple size="10" required>
                                     @foreach ($factura->categorie->items as $item)
-                                        @if ($factura->IsItem($item->name))
+                                        @if ($factura->IsItem($item->id))
                                             <option value="{{ $item->id }}" selected="">{{ $item->name }}</option>
                                         @else
                                             <option value="{{ $item->id }}" >{{ $item->name }}</option>

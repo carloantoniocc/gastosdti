@@ -4,9 +4,14 @@ namespace GastosDTI;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Factura extends Model
 {
+
+    use SoftDeletes;  
+    
     protected $table = 'facturas';
 
     protected $fillable = [
@@ -28,12 +33,12 @@ class Factura extends Model
         return $this->belongsToMany(Item::class, 'resumen_facturas')->withPivot('item_id');
     }
 
-    public function IsItem($nameitem)
+    public function IsItem($item_id)
     {
 
-        foreach ($this->items as $item)
+        foreach ($this->resumenFacturas as $item)
         {
-            if ($item->name == $nameitem)
+            if ($item->item_id == $item_id)
             {
                 return true;
             }
@@ -43,4 +48,14 @@ class Factura extends Model
 
     }
 
+    public function resumenfacturas()
+    {
+        return $this->hasMany(ResumenFactura::class);
+    }
+
+
+
 }
+
+
+

@@ -82,7 +82,7 @@ Route::get('getEstab/{mail}','Auth\LoginController@getEstab');
 Route::resource('detallefacturas','DetalleFacturaController');
 Route::get('detallefacturas/{factura}/detallegeneral','DetalleFacturaController@detallegeneral');
 Route::get('detallefacturas/{idresumenfactura}/detalleitem','DetalleFacturaController@detalleitem');
-
+Route::get('detallefacturas/{resumenfactura}/detalledelete','DetalleFacturaController@detalledelete');
 
 //Api
 Route::get('api/v1/facturas','FacturaController@getfacturas');

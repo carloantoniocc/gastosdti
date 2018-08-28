@@ -32,22 +32,6 @@
                             </div>
                         </div>
 
-                        <!--Campo Nombre-->
-                        <div class="form-group{{ $errors->has('descripcion') ? ' has-error' : '' }}">
-                            <label for="descripcion" class="col-md-4 control-label">Descripcion</label>
-
-                            <div class="col-md-6">
-                                <input id="descripcion" type="text" class="form-control" name="descripcion" value="{{$categorie->descripcion}}" required autofocus>
-
-                                @if ($errors->has('descripcion'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('descripcion') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-
                         <!--tipo de moneda -->  
                         <div class="form-group{{ $errors->has('moneda_id') ? ' has-error' : '' }}">
                           <label for="moneda_id" class="col-md-4 control-label">Tipo de Moneda</label>
@@ -66,6 +50,36 @@
                         </div>                        
 
 
+                        <!--Campo Nombre-->
+                        <div class="form-group{{ $errors->has('titulo1') ? ' has-error' : '' }}">
+                            <label for="titulo1" class="col-md-4 control-label">Encabezado 1</label>
+
+                            <div class="col-md-6">
+                                <input id="titulo1" type="text" class="form-control" name="titulo1" value="{{$categorie->titulo1}}" required autofocus>
+
+                                @if ($errors->has('titulo1'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('titulo1') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+                        <!--Campo Nombre-->
+                        <div class="form-group{{ $errors->has('titulo2') ? ' has-error' : '' }}">
+                            <label for="titulo2" class="col-md-4 control-label">Encabezado 2</label>
+
+                            <div class="col-md-6">
+                                <input id="titulo2" type="text" class="form-control" name="titulo2" value="{{$categorie->titulo2}}" required autofocus>
+
+                                @if ($errors->has('titulo2'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('titulo2') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
 
 						<!--Lista Activo-->
@@ -94,6 +108,7 @@
                         </div>
                     </form>
                 </div>
+                <div class="panel-footer">Id Registro : {{  $categorie->id }}</div>                
             </div>
 			<!--FIN Panel Formulario Editar Comuna-->
         </div>

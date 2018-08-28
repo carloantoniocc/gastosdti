@@ -25,7 +25,8 @@ class CreateFacturasTable extends Migration
             $table->decimal('montoresumen', 8, 2)->nullable();
             $table->integer('notacredito')->nullable();
             $table->integer('orden_compra')->nullable();
-            $table->boolean('active')->default(true);            
+            $table->boolean('active')->default(true);   
+            $table->softDeletes();         
             $table->timestamps();
 
             $table->foreign('categorie_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');

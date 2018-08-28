@@ -11,6 +11,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Auth;
+
 class CategorieController extends Controller
 {
 
@@ -26,11 +28,17 @@ class CategorieController extends Controller
 
     public function index()
     {
-        $categories = DB::table('categories')
-        ->join('monedas','monedas.id','=','categories.moneda_id')
-        ->select('categories.id as id','categories.name as name', 'categories.active as active','monedas.name as moneda')->paginate(10);
 
-        return view('categories.index',compact('categories'));
+        if (Auth::check()) {
+
+            $categories = Categorie::paginate();
+            return view('categories.index',compact('categories'));
+
+        } else {
+            return view('auth/login');
+        }
+
+
     }
 
     /**
@@ -40,8 +48,16 @@ class CategorieController extends Controller
      */
     public function create()
     {
-        $monedas = Moneda::all();
-        return view('categories.create',compact('monedas'));
+
+        if (Auth::check()) {
+
+            $monedas = Moneda::all();
+            return view('categories.create',compact('monedas'));
+
+        } else {
+            return view('auth/login');
+        }
+      
     }
 
     /**
@@ -53,28 +69,30 @@ class CategorieController extends Controller
     public function store(Request $request)
     {
 
-            $validator = validator::make($request->all(), [
+        if (Auth::check()) {
+
+            $this->validate($request, [
+
                 'name' => 'required|string|max:150|unique:categories',
                 'moneda_id' => 'required',
-                'descripcion' => 'required|string|max:150'
+                'titulo1' => 'string|max:30',
+                'titulo2' => 'string|max:30',
 
             ]);
             
-            if ($validator->fails()) {
-                return redirect('categories/create')
-                            ->withErrors($validator)
-                            ->withInput();
-            }
-            else {
-
                 $categorie = new Categorie;
                 $categorie->name = $request->input('name');    
-                $categorie->descripcion = $request->input('descripcion');    
                 $categorie->active = $request->input('active');
                 $categorie->moneda_id = $request->input('moneda_id');
+                $categorie->titulo1 = $request->input('titulo1');
+                $categorie->titulo2 = $request->input('titulo2');
                 $categorie->save(); 
                 return redirect('/categories')->with('message','store'); 
-            }        
+
+        } else {
+
+            return view('auth/login');
+        }
 
     }
 
@@ -95,12 +113,22 @@ class CategorieController extends Controller
      * @param  \GastosDTI\Categorie  $categorie
      * @return \Illuminate\Http\Response
      */
-    public function edit(Categorie $categorie, $id)
+    public function edit( $id)
     {
-        $categorie = Categorie::find($id);
-        $monedas = Moneda::all();
-        return view('categories.edit',compact('categorie','monedas'));
+
+        if (Auth::check()) {
+
+            $categorie = Categorie::find($id);
+            $monedas = Moneda::all();
+            return view('categories.edit',compact('categorie','monedas'));
+
+        } else {
+            return view('auth/login');
+        }
+
+
     }
+
 
     public function edititem($id)
     {
@@ -121,54 +149,54 @@ class CategorieController extends Controller
     public function postupdateitem(Request $request, $id)
     {
 
-            $validator = validator::make($request->all(), [
+        if (Auth::check()) {
+
+
+            $this->validate($request, [
                 'name' => 'required|string|max:150',
             ]);
             
-            if ($validator->fails()) {
-                return redirect('categories/update')
-                            ->withErrors($validator)
-                            ->withInput();
-            }
-            else {
-
                 $item = Item::find($id);
                 $item->name = $request->input('name');
                 $item->active = $request->input('active');
                 $item->save();    
 
                 return redirect('/categories/showcategorie/' . $item->categorie_id)->with('message','update');
-            }
+
+        } else {
+            return view('auth/login');
+        }                
 
     }
 
     public function update(Request $request, Categorie $categorie,$id)
     {
-        
-            $validator = validator::make($request->all(), [
+
+
+        if (Auth::check()) {
+
+            $this->validate($request, [
                 'name' => 'required|string|max:150',
                 'moneda_id' => 'required',
-                'descripcion' => 'required|string|max:150',
+                'titulo1' => 'string|max:150',
+                'titulo2' => 'string|max:150',
 
             ]);
             
-            if ($validator->fails()) {
-                return redirect('categories/create')
-                            ->withErrors($validator)
-                            ->withInput();
-            }
-            else {
 
                 $categorie = Categorie::find($id);
                 $categorie->name = $request->input('name');
-                $categorie->descripcion = $request->input('descripcion');
                 $categorie->active = $request->input('active');
                 $categorie->moneda_id = $request->input('moneda_id');
+                $categorie->titulo1 = $request->input('titulo1');
+                $categorie->titulo2 = $request->input('titulo2');                
                 $categorie->save();    
 
                 return redirect('/categories')->with('message','update');
-            } 
 
+        } else {
+            return view('auth/login');
+        } 
 
     }
 

@@ -3,10 +3,14 @@
 namespace GastosDTI;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Item extends Model
 {
     
+    use SoftDeletes;  
+
     protected $fillable = ['id','name','active','categorie_id', ];
 
     public function categorie()
