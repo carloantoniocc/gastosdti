@@ -77,12 +77,19 @@ Route::resource('establecimientos','EstablecimientosController');
 Route::get('getEstab/{mail}','Auth\LoginController@getEstab');
 
 
+//Resumen Factura
+Route::resource('resumenfactura','ResumenFacturaController');
+Route::get('resumenfactura/{factura}/cuadroresumen','ResumenFacturaController@cuadroresumen')->name('cuadroresumen');
+Route::get('resumenfactura/{resumen_factura}/borrar','ResumenFacturaController@borrar');
+
 
 //Detalle Facturas
 Route::resource('detallefacturas','DetalleFacturaController');
-Route::get('detallefacturas/{factura}/detallegeneral','DetalleFacturaController@detallegeneral');
 Route::get('detallefacturas/{idresumenfactura}/detalleitem','DetalleFacturaController@detalleitem');
-Route::get('detallefacturas/{resumenfactura}/detalledelete','DetalleFacturaController@detalledelete');
+
+
+
+
 
 //Api
 Route::get('api/v1/facturas','FacturaController@getfacturas');
@@ -126,9 +133,12 @@ Route::resource('uploads','UploadController');
 Route::get('uploads/{id}/inicio','UploadController@inicio');
 
 //index de carga masiva
+Route::get('uploadsfactura/{factura}/uploadfactura','UploadController@uploadfactura');
 Route::get('uploadsfactura/{resumenfactura}/upload','UploadController@upload');
 //importar file
+
 Route::post('uploadsfactura/{resumenfactura}/importar','UploadController@importar');
+Route::post('uploadsfactura/{factura}/importarfactura','UploadController@importarfactura');
 //descargar
 Route::get('uploadsfactura/storage/{storage}/downloadfile','UploadController@downloadfile');
 

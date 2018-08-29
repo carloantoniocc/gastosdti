@@ -45,7 +45,7 @@
 										<th>Nota de Credito</th>																		
 										<th>Estado</th>
 										<th>Editar</th>
-										<th>Detalle</th>
+										<th>Resumen</th>
 									  </tr>
 									</thead>
 									<tbody>
@@ -65,7 +65,7 @@
 											@endif
 										</td>
 	    								<td><a href="{{ URL::to('facturas/' . $factura->id . '/edit') }}" >editar</a></td>
-										<td><a href="{{ URL::to('detallefacturas/' . $factura->id . '/detallegeneral') }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list" style="font-size: 13px"><span></a></td>											
+										<td><a href="{{ URL::to('resumenfactura/' . $factura->id . '/cuadroresumen') }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-list" style="font-size: 13px"><span></a></td>											
 
 									  </tr>
 									  @endforeach

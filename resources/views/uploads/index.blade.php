@@ -31,7 +31,7 @@
 			<div class="container" >
 					<ol class="breadcrumb">
 					  <li><a href="{{ URL::to('facturas') }}">Facturas</a></li>
-					  <li>Carga Masiva - Factura ({{ $factura->numero }})</li>
+					  <li>Carga Masiva </li>
 					</ol>
 			</div>
 		</div>	
@@ -40,7 +40,7 @@
 			<div class="container">
 				<div class="col-md-8 ">
 					<div class="panel panel-default">
-						<div class="panel-heading"><h4>Importar Item : <strong>{{ strtolower($item->name) }} </strong> desde Excel</h4></div>
+						<div class="panel-heading"><h4>Importar Factura Nro : {{ strtolower($factura->numero) }}  </h4></div>
 						<div class="panel-body text-left">
 					        {{ csrf_field() }} 
 								
@@ -54,7 +54,7 @@
 
 								</br>          
 
-			                    <form class="form-inline" role="form" method="POST" action="/uploadsfactura/{{ $resumenfactura->id }}/importar" accept-charset="UTF-8" enctype="multipart/form-data">	
+			                    <form class="form-inline" role="form" method="POST" action="/uploadsfactura/{{ $factura->id }}/importarfactura" accept-charset="UTF-8" enctype="multipart/form-data">	
 			 						{{ csrf_field() }}
 	
 			                        <div class="form-group {{ $errors->has('file') ? ' has-error' : '' }}">
@@ -99,7 +99,7 @@
 
 						</div>
 
-						<div class="panel-footer">Importar <strong>({{ ucwords($storage->name) }}) </strong></div>
+						<div class="panel-footer">Nro registro :  {{ $factura->id }} </div>
 
 					</div>
 				</div>
@@ -124,7 +124,7 @@
 				            </ul>
 
 				            <div class="panel-footer">
-				                <a class="btn btn-lg btn-block btn-info" href="{{ URL::to('uploadsfactura/storage/' . $storage->id . '/downloadfile' ) }}"><span class="glyphicon glyphicon-download"></span> Descargar</a>
+				                <a class="btn btn-lg btn-block btn-info" ><span class="glyphicon glyphicon-download"></span> Descargar</a>
 				            </div>
 				        </div>
 
@@ -141,59 +141,6 @@
 	                        	<ul class="nav">
 
 									
-								@if (is_null($uploads))
-
-			  						@foreach($uploads as $upload)
-
-                            		<li class="nav-item">
-
-
-                        				<div>
-                        					<table class="table table-borderless table-condensed table-hover"  >
-                        						<tr>
-                        							<td colspan="2"><p style="font-size: 17px"><strong> {{ $upload->filename }}	</strong></p></td>
-                        							<td></td>                        							
-                        							<td class="text-right"><a  href="{{ URL::to('ufs/downloadfilenamestorage', ['$file' => $upload->filenamestorage] ) }}"><span class="glyphicon glyphicon-download-alt" style="font-size: 15px"></span> </a></td>
-
-
-                        						</tr>
-
-                        						<tr>
-                        							<td rowspan="2"><span class="glyphicon glyphicon-user" style="font-size: 38px"></span> </td>
-                        							<td colspan="2">
-                        								<table>
-                        									<tr>
-                        										<td colspan="2"><p class="text-primary">{{ $upload->usuario }} </p></td>
-                        									</tr> 
-															
-                        									<tr>
-                        										<td colspan="2">{{ $upload->created_at }} </td>
-                        									</tr> 
-
-                        									<tr>
-                        										<td colspan="2"><p class="text-secondary">(Sin Comentarios) </p></td>
-                        										<td></td>
-                        									</tr> 
-
-                        								</table>	  
-                        							</td>
-                        							<td></td>
-
-                        						</tr>
-												<tr>
-													<td></td>
-													<td></td>
-													<td></td>
-
-												</tr>
-
-                        					</table>
-                        				</div>
-	
-
-                            		</li>				  						
-									@endforeach	
-								@endif	
 
 	                        	</ul>
 	                    	</div>

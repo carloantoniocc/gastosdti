@@ -17,7 +17,7 @@ class CreateDetalleFacturasTable extends Migration
             $table->increments('id');
             $table->integer('comuna_id')->nullable()->unsigned();
             $table->integer('establecimiento_id')->nullable()->unsigned();
-            $table->integer('resumen_id')->unsigned();            
+            $table->integer('resumen_factura_id')->unsigned();            
             $table->boolean('active')->default(true);            
 
             //Servicios del contrato
@@ -38,7 +38,7 @@ class CreateDetalleFacturasTable extends Migration
             $table->timestamps();
 
 
-            $table->foreign('resumen_id')->references('id')->on('resumen_facturas')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('resumen_factura_id')->references('id')->on('resumen_facturas')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('comuna_id')->references('id')->on('comunas')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('establecimiento_id')->references('id')->on('establecimientos')->onUpdate('cascade')->onDelete('cascade');
 

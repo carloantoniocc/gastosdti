@@ -2,84 +2,48 @@
 
 namespace GastosDTI\Http\Controllers;
 
+use GastosDTI\DetalleFactura;
 use GastosDTI\ResumenFactura;
+use GastosDTI\Factura;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ResumenFacturaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+
+    public function cuadroresumen(Factura $factura)
     {
-        //
+        if (Auth::check()) {
+            return view('detallefacturas.detallegeneral',compact('factura'));      
+        } else {
+            return view('auth/login');
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+
+    public function borrar(ResumenFactura $resumen_factura)
     {
-        //
+        
+        if (Auth::check()) {
+
+            DetalleFactura::destroy($resumen_factura->detallefactura->pluck('id')->toArray());
+            $resumen_factura->resumen = NULL;
+            $resumen_factura->resumen2 = NULL;
+            $resumen_factura->monto = NULL;
+            $resumen_factura->save();
+            
+            return redirect()->route('cuadroresumen', ['factura' => $resumen_factura->factura])->with('message','delete');
+
+        } else {
+            return view('auth/login');
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \GastosDTI\ResumenFactura  $resumenFactura
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ResumenFactura $resumenFactura)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \GastosDTI\ResumenFactura  $resumenFactura
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ResumenFactura $resumenFactura)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \GastosDTI\ResumenFactura  $resumenFactura
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ResumenFactura $resumenFactura)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \GastosDTI\ResumenFactura  $resumenFactura
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ResumenFactura $resumenFactura)
-    {
-        //
-    }
 }

@@ -27,7 +27,10 @@ class ResumenFactura extends Model
     	return $this->belongsTo(Item::class);
     }
 
-    
+    public function detallefactura()
+    {
+        return $this->hasMany(DetalleFactura::class);
+    }    
 
 
 }

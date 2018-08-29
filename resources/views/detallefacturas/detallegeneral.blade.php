@@ -14,6 +14,11 @@
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			Factura Modificada Exitosamente
 		</div>
+	@elseif($message == 'delete')
+		<div class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Detalle de factura eliminado Exitosamente
+		</div>		
 	@endif
 	<!--FIN Mensajes de Guardado o Actualización de detalles-->
     <div class="row">
@@ -24,7 +29,11 @@
 			</ol>
 
             <div class="panel panel-default">
-                <div class="panel-heading"><h4><strong> {{ $factura->provider->name }}</strong></h4></div>
+                <div class="panel-heading"><h4><strong> {{ $factura->provider->name }} </strong></h4>
+
+					<a href="{{ URL::to('uploadsfactura/' . $factura->id .'/uploadfactura') }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Importar Datos"><span class="glyphicon glyphicon-import" ><span></a> 
+
+                </div>
                 <div class="panel-body">
                     {{ csrf_field() }} 
 
@@ -80,7 +89,7 @@
 											<td class="text-center">
 												<a href="{{ URL::to('uploadsfactura/' . $resumenfactura->id .'/upload') }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Importar Datos"><span class="glyphicon glyphicon-import" ><span></a> 
 
-												<a href="{{ URL::to('detallefacturas/' . $resumenfactura->id . '/detalledelete'  ) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Contenido de Item"><span class="glyphicon glyphicon-trash" ><span></a>
+												<a href="{{ URL::to('resumenfactura/' . $resumenfactura->id . '/borrar'  ) }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Contenido de Item" onclick="return confirm('Seguro que desea eliminar? esta accion eliminara la carga realizada.')" ><span class="glyphicon glyphicon-trash" ><span></a>
 
 									    	</td>
 

@@ -14,17 +14,20 @@ class DetalleFactura extends Model
     ];
 
     public function factura(){
-        $this->belongsto('app\Factura');
+        $this->belongsto(Factura::class);
     }
 
     public function comuna(){
-        $this->belongsto('app\Comuna');
+        $this->belongsto(Comuna::class);
     }
 
     public function establecimiento(){
-        $this->belongsto('app\establecimiento');
+        $this->belongsto(Establecimiento::class);
     }
 
+    public function resumenfactura(){
+        $this->belongsto(ResumenFactura::class);
+    }
         
 
 }

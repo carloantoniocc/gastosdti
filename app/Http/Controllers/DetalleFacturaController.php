@@ -109,26 +109,6 @@ class DetalleFacturaController extends Controller
 
 
 
-    public function detallegeneral(Factura $factura)
-    {
-
-        if (Auth::check()) {
-
-            return view('detallefacturas.detallegeneral',compact('factura'));      
-
-        } else {
-            return view('auth/login');
-        }
-
-    }
-    
-
-    public function detalledelete(ResumenFactura $resumenfactura)
-    {
-        dd($resumenfactura);
-
-    }
-
     public function detalleitem($idresumenfactura)
     {
 
