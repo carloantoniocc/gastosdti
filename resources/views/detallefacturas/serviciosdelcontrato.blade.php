@@ -35,9 +35,9 @@
 								  </tr>
 								</thead>
 								<tbody>
-								  @foreach($detalles as $detalle)
+								  @foreach($detallefacturas as $detalle)
 								  <tr>
-									<td>{{ $detalle->establecimiento }}</td>
+									<td>{{ $detalle->establecimiento->name }}</td>
 									<td>{{ $detalle->cantidad }}</td>
 									<td>{{ $detalle->total }}</td>
 								  </tr>
@@ -45,7 +45,6 @@
 								</tbody>
 							</table>
 							<!--paginacion-->
-							{{ $detalles->links() }}
 						</div>
 					</div>
 					<!-- FIN Lista de Comunas -->			

@@ -19,6 +19,11 @@
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			Detalle de factura eliminado Exitosamente
 		</div>		
+	@elseif($message == 'importar')
+		<div class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Detalle de factura importado Exitosamente
+		</div>			
 	@endif
 	<!--FIN Mensajes de Guardado o Actualización de detalles-->
     <div class="row">
@@ -30,8 +35,6 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading"><h4><strong> {{ $factura->provider->name }} </strong></h4>
-
-					<a href="{{ URL::to('uploadsfactura/' . $factura->id .'/uploadfactura') }}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Importar Datos"><span class="glyphicon glyphicon-import" ><span></a> 
 
                 </div>
                 <div class="panel-body">

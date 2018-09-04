@@ -36,6 +36,9 @@ class ResumenFacturaController extends Controller
             $resumen_factura->resumen2 = NULL;
             $resumen_factura->monto = NULL;
             $resumen_factura->save();
+            $factura = $resumen_factura->factura;
+            $factura->actualizamonto($factura);
+            
             
             return redirect()->route('cuadroresumen', ['factura' => $resumen_factura->factura])->with('message','delete');
 

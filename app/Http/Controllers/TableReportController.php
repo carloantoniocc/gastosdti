@@ -4,9 +4,13 @@ namespace GastosDTI\Http\Controllers;
 
 use GastosDTI\TableReport;
 use GastosDTI\Comuna;
+use GastosDTI\Factura;
 use GastosDTI\Establecimiento;
+use GastosDTI\Categorie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+
+use Carbon\Carbon;
 
 class TableReportController extends Controller
 {
@@ -18,14 +22,12 @@ class TableReportController extends Controller
     public function index()
     {
         $comunas = Comuna::all();
+        $categories = Categorie::all();
 
-        $datos = DB::table('facturas')
-                    ->join('resumen_facturas','resumen_facturas.factura_id','=','facturas.id')
-                    ->select('facturas.fecha_recepcion as fecha', DB::raw('sum(resumen_facturas.monto) as monto'))
-                    ->groupBY('facturas.fecha_recepcion')
-                    ->get();
+        //$datos =    Factura::groupBY(DB::raw('year(fecha_recepcion)' ))
+        //            ->selectRaw('year(fecha_recepcion) as fecha , sum(monto) as monto')->get();
 
-        return view('tableReports.index',compact('comunas','datos'));
+        return view('tableReports.index',compact('categories','comunas'));
     }
 
     public function getEstablecimientos(Request $request,$id)
@@ -38,15 +40,7 @@ class TableReportController extends Controller
             return response()->json($establecimientos);
         }        
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -54,96 +48,49 @@ class TableReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function consulta(Request $request)
     {
 
-         $comunas = Comuna::select('id','name','active')->orderBy('name')->get();
 
+        $this->validate($request, [
+            'fecha_inicio' => 'required|date_format:"Y-m-d',
+            'fecha_termino' => 'required|date_format:"Y-m-d',
+            'categorie' => 'required',
+        ]);
+
+        //$datos = Factura::filtracategoria($request->input('categorie'))->get();
+
+        
+
+            $datos = Factura::filtracategoria($request->input('categorie'))
+                        ->filtrafechas( $request->input('fecha_inicio') , $request->input('fecha_termino') )
+                        ->tipobusqueda( $request->input('comuna') , $request->input('establecimiento') )
+                        ->get();
 
         if ($request->has('establecimiento')) {
 
+            $datos1 = Factura::filtracategoria($request->input('categorie'))
+                        ->filtrafechas( $request->input('fecha_inicio') , $request->input('fecha_termino') )
+                        ->groupBY(DB::raw('year(fecha_recepcion)' ))
+                        ->selectRaw('year(fecha_recepcion) as fecha , sum(monto) as monto')->get();
 
 
-        $datos = DB::table('facturas')
-                    ->join('resumen_facturas','resumen_facturas.factura_id','=','facturas.id')
-                    ->join('detalle_facturas','detalle_facturas.resumen_id','=','resumen_facturas.id')
-                    ->join('establecimientos','establecimientos.id','=','detalle_facturas.establecimiento_id')
-                    ->where('detalle_facturas.establecimiento_id','=',$request->establecimiento)
-                    ->select('facturas.fecha_recepcion as fecha' ,DB::raw('sum(detalle_facturas.total) as monto'))
-                    ->groupBY('facturas.fecha_recepcion')
-                    ->get();
-
-            
-        }else{
-
- 
-
-        $datos = DB::table('facturas')
-                    ->join('resumen_facturas','resumen_facturas.factura_id','=','facturas.id')
-                    ->join('detalle_facturas','detalle_facturas.resumen_id','=','resumen_facturas.id')                            
-                    ->join('comunas','comunas.id','=','detalle_facturas.comuna_id')
-                    ->join('establecimientos','establecimientos.id','=','detalle_facturas.establecimiento_id')
-                    ->where('detalle_facturas.comuna_id','=',$request->comuna)
-                    ->select('facturas.fecha_recepcion as fecha',   DB::raw('sum(detalle_facturas.total) as monto'))
-                    ->groupBY('facturas.fecha_recepcion')
-                    ->get();
-
-
+        }else{    
+        
+            $datos1 = Factura::filtracategoria($request->input('categorie'))
+                        ->filtrafechas( $request->input('fecha_inicio') , $request->input('fecha_termino') )
+                        ->groupBY(DB::raw('year(fecha_recepcion)' ))
+                        ->selectRaw('year(fecha_recepcion) as fecha , sum(monto) as monto')->get();
         }            
 
-        return view('/tableReports.index', compact('datos','comunas'));
+
+        $categories = Categorie::all();            
+        $comunas = Comuna::all();
+
+        return view('/tableReports.index', compact('datos','comunas','categories'));
 
     }
 
 
-    public function ver(Request $request)
-    {
-        dd('ver');
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \GastosDTI\TableReport  $tableReport
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TableReport $tableReport)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \GastosDTI\TableReport  $tableReport
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TableReport $tableReport)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \GastosDTI\TableReport  $tableReport
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TableReport $tableReport)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \GastosDTI\TableReport  $tableReport
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TableReport $tableReport)
-    {
-        //
-    }
 }

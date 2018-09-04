@@ -41,15 +41,15 @@
 								  </tr>
 								</thead>
 								<tbody>
-								  @foreach($detalles as $detalle)
+								  @foreach($detallefacturas as $detallefactura)
 								  <tr>
-									<td>{{ $detalle->establecimiento }}</td>
-									<td>{{ $detalle->servicio }}</td>
-									<td>{{ $detalle->pagounico }}</td>
-									<td>{{ $detalle->rentamensual }}</td>
-									<td>{{ $detalle->plazo }}</td>
-									<td>{{ $detalle->iniciocobro }}</td>
-									<td>{{ $detalle->cuota }}</td>
+									<td>{{ $detallefactura->establecimiento->name }}</td>
+									<td>{{ $detallefactura->servicio }}</td>
+									<td>{{ $detallefactura->pagounico }}</td>
+									<td>{{ $detallefactura->rentamensual }}</td>
+									<td>{{ $detallefactura->plazo }}</td>
+									<td>{{ $detallefactura->iniciocobro }}</td>
+									<td>{{ $detallefactura->cuota }}</td>
 
 									<td>
 										@if( $detalle->active == 1 )
@@ -64,7 +64,6 @@
 								</tbody>
 							</table>
 							<!--paginacion-->
-							{{ $detalles->links() }}
 						</div>
 					</div>
 					<!-- FIN Lista de Comunas -->			

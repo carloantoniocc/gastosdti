@@ -94,22 +94,6 @@
                         </div>
 
 
-                        <!--Campo monto-->
-                        <div class="form-group{{ $errors->has('monto') ? ' has-error' : '' }}">
-                            <label for="monto" class="col-md-4 control-label">Monto </label>
-
-                            <div class="col-md-6">
-                                <input id="monto" type="text" class="form-control" name="monto" value="{{ old('monto') }}" required autofocus>
-
-                                @if ($errors->has('monto'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('monto') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            
-                        </div>
-
                         <!--Nota de Credito-->
                         <div class="form-group{{ $errors->has('notacredito') ? ' has-error' : '' }}">
                             <label for="notacredito" class="col-md-4 control-label">Nota de Credito</label>

@@ -85,20 +85,14 @@ Route::get('resumenfactura/{resumen_factura}/borrar','ResumenFacturaController@b
 
 //Detalle Facturas
 Route::resource('detallefacturas','DetalleFacturaController');
-Route::get('detallefacturas/{idresumenfactura}/detalleitem','DetalleFacturaController@detalleitem');
-
-
-
+Route::get('detallefacturas/{resumen_factura}/detalleitem','DetalleFacturaController@detalleitem');
 
 
 //Api
 Route::get('api/v1/facturas','FacturaController@getfacturas');
 
 
-
 //Categorie
-
-
 Route::resource('categories','CategorieController');
 //Route::get('categories/{id}/crearitem','CategorieController@crearitem');
 Route::get('categories/showcategorie/{categorie}','CategorieController@showcategorie');
@@ -147,6 +141,7 @@ Route::get('uploadsfactura/storage/{storage}/downloadfile','UploadController@dow
 //index
 Route::resource('tablereports','TableReportController');
 Route::get('tablereportsest/{id}','TableReportController@getEstablecimientos');
+Route::post('tablereports/consulta','TableReportController@consulta');
 //consulta
 Route::get('tablereports/consultar','TableReportController@consultar');
 

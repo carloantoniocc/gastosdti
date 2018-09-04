@@ -100,7 +100,7 @@ class FacturaController extends Controller
                 'items' => 'required',
                 'numero' => 'required|numeric|digits_between:1,9',
                 'notacredito' => 'numeric|nullable|max:999999999',
-                'monto' => 'required|max:20|regex:/^[0-9]+(?:\.[0-9]{1,2})?$/',
+                //'monto' => 'required|max:20|regex:/^[0-9]+(?:\.[0-9]{1,2})?$/',
                 'fecha_recepcion' => 'required|date_format:"Y-m-d',
                 'active' => 'required'
             ]);
@@ -111,7 +111,7 @@ class FacturaController extends Controller
                 $factura->numero = $request->input('numero');
                 $factura->notacredito = $request->input('notacredito');
                 $factura->fecha_recepcion =  $request->input('fecha_recepcion');
-                $factura->monto =  $request->input('monto');
+                //$factura->monto =  $request->input('monto');
                 $factura->active =  $request->input('active');
                 $factura->save();
 
@@ -177,7 +177,7 @@ class FacturaController extends Controller
                 'items' => 'required',
                 'numero' => 'required|numeric|digits_between:1,9',
                 'notacredito' => 'numeric|nullable|max:999999999',
-                'monto' => 'required|max:20|regex:/^[0-9]+(?:\.[0-9]{1,2})?$/',
+                //'monto' => 'required|max:20|regex:/^[0-9]+(?:\.[0-9]{1,2})?$/',
                 'fecha_recepcion' => 'required|date_format:"Y-m-d',
                 'active' => 'required'
             ]);
@@ -186,7 +186,7 @@ class FacturaController extends Controller
             $factura->categorie_id = $request->input('jsoncategorie_id'); 
             $factura->numero = $request->input('numero');
             $factura->fecha_recepcion =  $request->input('fecha_recepcion');
-            $factura->monto =  $request->input('monto');
+            //$factura->monto =  $request->input('monto');
             $factura->notacredito =  $request->input('notacredito');
             $factura->active =  $request->input('active');
             $factura->save();

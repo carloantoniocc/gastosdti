@@ -5,6 +5,7 @@ namespace GastosDTI;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 
 class Factura extends Model
@@ -53,6 +54,37 @@ class Factura extends Model
         return $this->hasMany(ResumenFactura::class);
     }
 
+    public function actualizamonto(Factura $factura)
+    {
+        $factura->monto = $factura->resumenfacturas->sum('monto');
+        $factura->save();
+
+
+    }
+
+    public function scopeFiltracategoria($query, $categorie)
+    {
+        $query->where('categorie_id', $categorie);   
+    }
+
+    public function scopeFiltrafechas($query, $inicio, $termino)
+    {
+        $query->whereBetween('fecha_recepcion', [ $inicio , $termino ]);   
+    }
+
+    public function scopeTipobusqueda($query, $comuna, $establecimiento)
+    {
+
+        if (empty($comuna) && empty($establecimiento) ) {
+
+            $query->groupBY(DB::raw('year(fecha_recepcion)' ))
+                  ->selectRaw('year(fecha_recepcion) as fecha , sum(monto) as monto');      
+        }else{
+
+        }
+
+
+    }
 
 
 }

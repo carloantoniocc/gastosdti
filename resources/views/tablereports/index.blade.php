@@ -4,8 +4,7 @@
 
 
 
-
-
+@if (isset($datos))
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -15,11 +14,9 @@
         var data = google.visualization.arrayToDataTable([
           ['fecha', 'monto'],
 
-        
             @foreach($datos as $dato)
                 [' {{ $dato->fecha }} ', {{ $dato->monto }} ],
             @endforeach
-        
 
         ]);
 
@@ -28,10 +25,11 @@
         };
 
         var chart = new google.visualization.ColumnChart(document.getElementById('piechart'));
-
         chart.draw(data, options);
       }
     </script>
+@endif
+
 
 	<div class="container">
 		<div class="row">
@@ -40,14 +38,30 @@
 					<div class="panel-body">
 
 
-						<form class="form-horizontal" role="form" method="POST" action="/tablereports">
+						<form class="form-horizontal" role="form" method="POST" action="/tablereports/consulta">
                          {{ csrf_field() }}
+
+
+                            <!--Lista Categoria-->
+                            <div class="form-group{{ $errors->has('categorie') ? ' has-error' : '' }}">
+                                <label for="categorie" class="col-md-4 control-label">Categoria</label>
+
+                                <div class="col-md-6">
+                                    <select id="categorie" class="form-control" name="categorie" required>
+                                      <option value="">Seleccione Categoria</option>
+                                      @foreach($categories as $categorie)
+                                        <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                                      @endforeach
+                                    </select>
+                                </div>
+                            </div>      
+
     						<!--Lista Comunas-->
     						<div class="form-group{{ $errors->has('comuna') ? ' has-error' : '' }}">
     	                        <label for="comuna" class="col-md-4 control-label">Comuna</label>
 
     	                        <div class="col-md-6">
-    								<select id="comuna" class="form-control" name="comuna" required>
+    								<select id="comuna" class="form-control" name="comuna" >
     								  <option value="">Seleccione Comuna</option>
     								  @foreach($comunas as $comuna)
     									<option value="{{ $comuna->id }}">{{ $comuna->name }}</option>
@@ -69,6 +83,39 @@
     	                        </div>
     	                    </div>
 
+                            <!--Fecha inicio-->
+                            <div class="form-group{{ $errors->has('fecha_inicio') ? ' has-error' : '' }}">
+                                <label for="fecha_inicio" class="col-md-4 control-label">Fecha inicio</label>
+
+                                <div class="col-md-6">
+                                    <input id="fecha_inicio" type="date" name="fecha_inicio" value="{{ old('fecha_inicio') }}" autofocus>
+
+                                    @if ($errors->has('fecha_inicio'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fecha_inicio') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+
+                            <!--Fecha Termino-->
+                            <div class="form-group{{ $errors->has('fecha_termino') ? ' has-error' : '' }}">
+                                <label for="fecha_termino" class="col-md-4 control-label">Fecha termino</label>
+
+                                <div class="col-md-6">
+                                    <input id="fecha_termino" type="date" name="fecha_termino" value="{{ old('fecha_termino') }}"  autofocus>
+
+                                    @if ($errors->has('fecha_termino'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fecha_termino') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+
+
                             <!--Boton Submit-->
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4 text-right">
@@ -87,7 +134,7 @@
 		</div>
 
 
-
+@if (isset($datos))
         <div class="row">
             <div>
                 <table class="table table-striped">
@@ -98,6 +145,7 @@
             </div>
             
         </div>
+@endif        
     </div>
     
 

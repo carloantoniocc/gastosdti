@@ -19,203 +19,40 @@ use Illuminate\Support\Facades\Auth;
 class UploadController extends Controller
 {
 
-    public function uploadfactura(Factura $factura)
-    {
-        return view('uploads.index',compact('factura'));
-    }
-
-
-    public function importarfactura(Request $request,Factura $factura)
-    {
-
-        foreach ($factura->resumenfacturas as $key => $resumenfactura) {
-            
-            switch ($resumenfactura->item->storage->codigo) {
-                case 'STG01':
-                    return $this->stg01_factura($request,$resumenfactura,$resumenfactura->item);
-                    break;
-                case '':
-                    echo "";
-                    break;
-            }
-
-        }
-
-
-    }
-
-
-
-    public function stg01_factura(Request $request, ResumenFactura $resumenfactura,Item $item)
-    {
-
-        $validator = validator::make($request->all(), [
-            'file' => 'max:5000',
-            'file' => 'mimes:xls,xlsx'
-
-        ],[
-
-            'file.max' => 'El Peso maximo del archivo es 5 megas',
-            'file.mimes' =>'El documento debe ser un archivo de tipo xls, xlsx',
-
-        ]);
-
-
-        $validator->after(function ($validator) use ($request,$resumenfactura,$item){
-
-            $file = $request->file('file');    
-            $excelEsValido = 0;
-            
-            $excelCheckRows = Excel::selectSheetsByIndex(0)->load($file, function($reader){ $reader->formatDates(true, 'Y-m-d'); })->limit(300, 0)->limitColumns(13, 0)->get();
-
-            $total = 0;
-            $titulo1 = 0;
-            $titulo2 = 0;
-
-            foreach ($excelCheckRows as $key => $value) {
-                
-
-                if (count($value) <> 13) {                
-                    $validator->errors()->add('file', 'El numero de columnas no corresponde al especificado en el catalogo');
-                    $excelEsValido++;
-                    break;
-                }elseif ( !isset($value["codigo"]) || !isset($value["cantidad"]) || !isset($value["valorunitario"]) || !isset($value["total"]) ) {
-                    $validator->errors()->add('file', 'Nombre de columna no es valido, favor revisar el catalogo');
-                    $excelEsValido++;
-                    break;
-                }
-
-
-                $establecimiento = Establecimiento::where('entelcode', $value->codigo)->get();
-                
-                
-
-                if ($value->codigo == null){
-                    $validator->errors()->add('file', 'El documento no es valido, valor nulo en fila : ' . ($key + 2) . ', favor revisar catalogo.');
-                    $excelEsValido++;                     
-                } elseif (count($establecimiento) == 0) {
-                    $validator->errors()->add('file', 'El codigo de establecimiento no es valido, favor revisar archivo en fila : ' . ($key + 2) . ', favor revisar catalogo.');
-                    $excelEsValido++;                    
-                } elseif (!is_numeric($value->cantidad)) {
-                    $validator->errors()->add('file', 'El documento no es valido, Valor no es numerico en fila : ' . ($key + 2) . ', favor revisar catalogo.');
-                    $excelEsValido++;                    
-                } elseif (!is_numeric($value->valorunitario)) {
-                    $validator->errors()->add('file', 'El documento no es valido, Valor no es numerico en fila : ' . ($key + 2) . ', favor revisar catalogo.');
-                    $excelEsValido++;                    
-                } elseif (!is_numeric($value->total)) {
-                    $validator->errors()->add('file', 'El documento no es valido, Valor no es numerico en fila : ' . ($key + 2) . ', favor revisar catalogo.');
-                    $excelEsValido++;                    
-                } 
-
-                
-                $titulo1 += $value->cantidad;
-                $titulo2 = $value->valorunitario;
-                $total += $value->total;
-            }    
-
-
-            if ($excelEsValido == 0)
-            {
-
-                $resumenfactura->resumen =  $titulo1;
-                $resumenfactura->resumen2 =  $titulo2;
-                $resumenfactura->monto = $total;
-                $resumenfactura->save();
-
-
-                $mime = \Request::file('file')->getMimeType();
-                $extension = strtolower(\Request::file('file')->getClientOriginalExtension());
-                $path = "files_uploaded";
-                $codigo = uniqid();
-                $filenamestorage =  $codigo . '.' . $extension;
-
-
-                $upload = new Upload();
-                $upload->codigo = $codigo;
-                $upload->filename = $file->getClientOriginalName();
-                $upload->filenamestorage = $filenamestorage;
-                $upload->storage_id = $item->storage_id;  
-                $upload->iduser = Auth::id();
-                
-
-                    if($upload->save())
-                    {
-
-                        \Storage::disk('local')->put($filenamestorage,  \File::get($file));
-
-                        foreach ($excelCheckRows as $key => $value) {
-                            
-
-                            $detallefactura = new DetalleFactura;
-                            $detallefactura->cantidad = $value->cantidad;
-                            $detallefactura->valorunitario = $value->valorunitario;
-                            $detallefactura->total = $value->total;
-                            $detallefactura->comuna_id = NULL;
-
-                            $establecimiento = Establecimiento::where('entelcode','=',$value->codigo)->get()->first();
-                            $resumenfactura = ResumenFactura::where('factura_id','=', $resumenfactura->factura_id)->where('item_id','=',$resumenfactura->item_id)->get()->first();
-
-                            $detallefactura->resumen_factura_id = $resumenfactura->id;                           
-
-                            $detallefactura->establecimiento_id = $establecimiento->id;
-                            $detallefactura->comuna_id = $establecimiento->comuna_id;
-                            $detallefactura->active = 1;
-                            $detallefactura->save();
-
-                        }   
-                            
-                    }else{
-                            \File::delete($path."/".$fileName);
-                            $validator->errors()->add('file', 'Un error ha ocurrido al momento de registrar el documento');                    
-                    }
-
-            }
-
-        });
-        
-
-
-        if ($validator->fails()) {
-
-            return redirect()->back()
-            ->withErrors($validator)
-            ->withInput();                    
-        }else{
-            return back()->with('message', 'success');
-        }                
-
-
-    }
-
-
-
 
     public function upload(ResumenFactura $resumenfactura)
     {
 
-        $factura = Factura::find($resumenfactura->factura_id);
-        $item = Item::find($resumenfactura->item_id);   
-        $storage = $item->storage;
-        $uploads = new Upload;
-
-        return view('uploads.index',compact('factura','item','storage','uploads','resumenfactura'));
+        if (Auth::check()) {
+            return view('uploads.index',compact('resumenfactura'));
+        } else {
+            return view('auth/login');
+        }
         
     }
 
     public function importar(Request $request,ResumenFactura $resumenfactura)
     {
 
-        switch ($resumenfactura->item->storage->codigo) {
-            case 'STG01':
-                return $this->stg01($request,$resumenfactura,$resumenfactura->item);
-                break;
-            case 'STG02':
-                return $this->stg02($request,$resumenfactura,$item);
-                break;
-            case '':
-                echo "i es igual a 2";
-                break;
+        if (Auth::check()) {        
+
+            switch ($resumenfactura->item->storage->codigo) {
+                case 'STG01':
+                    return $this->stg01($request,$resumenfactura,$resumenfactura->item);
+                    break;
+                case 'STG02':
+                    return $this->stg02($request,$resumenfactura,$item);
+                    break;
+                case '':
+                    echo "i es igual a 2";
+                    break;
+
+            }
+
+        } else {
+            return view('auth/login');
         }
+
 
     }
 
@@ -295,6 +132,9 @@ class UploadController extends Controller
                 $resumenfactura->resumen2 =  $titulo2;
                 $resumenfactura->monto = $total;
                 $resumenfactura->save();
+                $factura = $resumenfactura->factura;
+                $factura->actualizamonto($factura);
+                
 
 
                 $mime = \Request::file('file')->getMimeType();
@@ -355,7 +195,7 @@ class UploadController extends Controller
             ->withErrors($validator)
             ->withInput();                    
         }else{
-            return back()->with('message', 'success');
+            return redirect()->route('cuadroresumen', ['factura' => $resumenfactura->factura])->with('message','importar');
         }                
 
 
