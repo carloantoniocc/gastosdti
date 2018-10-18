@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'role_user',
             'establecimiento_user',
             'dolars',
-            'Ufs',
+            //'Ufs',
             'providers',
             'monedas',
             'categories',
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ComunaSeeder::class);
         $this->call(EstablecimientoUserSeeder::class);
         $this->call(ProviderSeeder::class); 
-        $this->call(UfSeeder::class);       
+        //$this->call(UfSeeder::class);       
         $this->call(DolarSeeder::class);
         $this->call(MonedaSeeder::class);
         $this->call(StorageSeeder::class);
