@@ -11,7 +11,7 @@ class Item extends Model
     
     use SoftDeletes;  
 
-    protected $fillable = ['id','name','active','categorie_id', ];
+    protected $fillable = ['id','name','active','categorie_id', 'storage_id' ];
 
     public function categorie()
     {

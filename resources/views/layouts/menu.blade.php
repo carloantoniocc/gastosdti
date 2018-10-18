@@ -91,7 +91,7 @@
 					
 					<ul class="dropdown-menu" role="menu">
 						<li>
-							<a href="{{ URL::to('tablereports') }}">Tabla Resumen </a>
+							<a href="{{ URL::to('/tablereports') }}">Tabla Resumen </a>
 						</li>	
 					</ul>
 				</li>	

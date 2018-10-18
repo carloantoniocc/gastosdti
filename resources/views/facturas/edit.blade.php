@@ -18,7 +18,7 @@
                         <input type="hidden" name="_method" value="PUT">
 						{{ csrf_field() }}
 
-
+                        <input type="hidden" name="factura_id" value="{{$factura->id}}">
 
                         <!--Campo Proveedor-->
                         <div class="form-group{{ $errors->has('jsonprovider_id') ? ' has-error' : '' }}">

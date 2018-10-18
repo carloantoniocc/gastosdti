@@ -2,33 +2,34 @@
 
 @section('content')
 
-
-
 @if (isset($datos))
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
 
-        var data = google.visualization.arrayToDataTable([
-          ['fecha', 'monto'],
+          function drawChart() {
 
-            @foreach($datos as $dato)
-                [' {{ $dato->fecha }} ', {{ $dato->monto }} ],
-            @endforeach
+            var data = google.visualization.arrayToDataTable([
+              ['fecha', 'monto'],
 
-        ]);
+                @foreach($datos as $dato)
+                    [' {{ $dato->fecha }} ', {{ $dato->monto }} ],
+                @endforeach
 
-        var options = {
-          title: 'Total facturado', 'width':900, 'height':500
-        };
+            ]);
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-      }
-    </script>
+            var options = {
+              title: 'Total facturado', 'width':900, 'height':500
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+          }
+        </script>
+
 @endif
+
 
 
 	<div class="container">
@@ -37,9 +38,8 @@
 					<div class="panel-heading">Tabla Resumen</div>
 					<div class="panel-body">
 
-
-						<form class="form-horizontal" role="form" method="POST" action="/tablereports/consulta">
-                         {{ csrf_field() }}
+                        <form class="form-horizontal" method="post" action="/tablereports/getFormulario">
+                         <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
 
 
                             <!--Lista Categoria-->

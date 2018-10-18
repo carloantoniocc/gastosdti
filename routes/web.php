@@ -139,15 +139,11 @@ Route::get('uploadsfactura/storage/{storage}/downloadfile','UploadController@dow
 
 //reportes
 //index
-Route::resource('tablereports','TableReportController');
+Route::resource('/tablereports','TableReportController');
 Route::get('tablereportsest/{id}','TableReportController@getEstablecimientos');
-Route::post('tablereports/consulta','TableReportController@consulta');
-//consulta
-Route::get('tablereports/consultar','TableReportController@consultar');
+Route::post('/tablereports/getFormulario','TableReportController@getFormulario');
 
 Route::resource('storages','StorageController');
-
-
 
 Route::resource('entelcodes','EntelcodeController');
 Route::get('entelcodes/{establecimiento}/editcode','EntelcodeController@editcode');

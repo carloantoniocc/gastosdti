@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use GastosDTI\Http\Requests\ItemStoreRequest;
+
 class ItemController extends Controller
 {
    
@@ -29,14 +31,12 @@ class ItemController extends Controller
      */
     public function index()
     {
-
-        $items = DB::table('categories')
-        ->join('items', 'items.categorie_id','=','categories.id')
-        ->join('storages','storages.id','=','items.storage_id')
-        ->where('categories.active','=',1) 
-        ->select('items.id as id','items.name as name', 'items.active as active', 'categories.name as categoria','storages.name as storage')->get();
-        
-        return view('items.index',compact('items'));
+        if (Auth::check()) {
+            $items = Item::with('categorie','storage')->orderBy('name','ASC')->paginate();
+            return view('items.index',compact('items'));
+        }else{
+            return view('auth/login');
+        }            
     }
 
     /**
@@ -47,13 +47,12 @@ class ItemController extends Controller
     public function create()
     {
         if (Auth::check()) {
-            $items = Item::select('id','name')->where('active','=','1')->get();
-            $categories = Categorie::select('id','name')->where('active','=','1')->get();
-            $storages = Storage::all(); 
+            $categories = Categorie::select('id','name')->where('active','=','1')->orderBy('name','ASC')->get();
+            $storages = Storage::orderBy('name','ASC')->get(); 
 
             return view('items.create',compact('items','categories','storages'));      
-        }
-        else {
+
+        }else{
             return view('auth/login');
         }
     }
@@ -64,30 +63,20 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ItemStoreRequest $request)
     {
 
-        $item = new Item;
-        $item->name = $request->input('name');
-        $item->active = $request->input('active');
-        $item->categorie_id = $request->input('categorie_id');
-        $item->storage_id = $request->input('storage_id');
-        $item->save();
+        if (Auth::check()) {
+            
+            $request->createItem();
+            return redirect('items')->with('message','store');    
 
-        return redirect('items')->with('message','store');
+        }else{
+            return view('auth/login');
+        }
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \GastosDTI\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Item $item)
-    {
-        //
-    }
 
     public function showcategorie($id)
     {
@@ -104,11 +93,16 @@ class ItemController extends Controller
      */
     public function edit(Request $request, Item $item)
     {
+        
+        if (Auth::check()) {
+            $categories = Categorie::orderBy('name','ASC')->get();
+            $storages = Storage::orderBy('name','ASC')->get(); 
 
-        $categories = Categorie::all();
-        $storages = Storage::all(); 
+            return view('items.edit',compact('categories','item','storages'));
 
-        return view('items.edit',compact('categories','item','storages'));
+        }else{
+            return view('auth/login');
+        }           
         
     }
 
@@ -121,9 +115,6 @@ class ItemController extends Controller
      * @param  \GastosDTI\Item  $item
      * @return \Illuminate\Http\Response
      */
-
-
-
 
     public function update(Request $request,Item $item)
     {

@@ -16,7 +16,7 @@ class Factura extends Model
     protected $table = 'facturas';
 
     protected $fillable = [
-    	'numero','fecha', 'provider'
+    	'numero','fecha', 'provider','provider_id','fecha_recepcion','categorie_id'
     ];
 
     public function categorie()
@@ -80,6 +80,8 @@ class Factura extends Model
             $query->groupBY(DB::raw('year(fecha_recepcion)' ))
                   ->selectRaw('year(fecha_recepcion) as fecha , sum(monto) as monto');      
         }else{
+            
+            
 
         }
 

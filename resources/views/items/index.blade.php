@@ -47,8 +47,8 @@
 								  @foreach($items as $item)
 								  <tr>
 									<td>{{ $item->name }}</td>
-									<td>{{ $item->categoria }}</td>
-									<td>{{ $item->storage }}</td>
+									<td>{{ $item->categorie->name }}</td>
+									<td>{{ $item->storage->name }}</td>
 									<td>
 										@if( $item->active == 1 )
 											Activo

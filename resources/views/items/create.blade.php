@@ -16,12 +16,12 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="/items">
                         {{ csrf_field() }}
-						<!--Campo c-->
+						<!--Ingreso de nombre-->
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nombre</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" required autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         
-                        <!-- codigo de categoria -->
+                        <!-- seleccion de categories -->
                         <div class="form-group{{ $errors->has('categorie_id') ? ' has-error' : '' }}">
                             <label for="categorie_id" class="col-md-4 control-label">Categoria</label>
 
@@ -39,13 +39,22 @@
                                 <select id="categorie_id" class="form-control" name="categorie_id" required>
                                   <option value="">Seleccione Categoria</option>
                                   @foreach($categories as $categorie)
-                                    <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
+                                    <option value="{{ $categorie->id  }}" {{ old('categorie_id') == $categorie->id ? ' selected' : '' }}>
+                                        {{ $categorie->name }}
+                                    </option>
                                   @endforeach
                                 </select>
+
+                                @if ($errors->has('categorie_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('categorie_id') }}</strong>
+                                    </span>
+                                @endif
+
                             </div>
                         </div>
 
-                        <!-- codigo de categoria -->
+                        <!-- seleccion de storages -->
                         <div class="form-group{{ $errors->has('storage_id') ? ' has-error' : '' }}">
                             <label for="storage_id" class="col-md-4 control-label">Tipo de Carga</label>
 
@@ -53,9 +62,18 @@
                                 <select id="storage_id" class="form-control" name="storage_id" required>
                                   <option value="">Seleccione Tipo de Carga</option>
                                   @foreach($storages as $storage)
-                                    <option value="{{ $storage->id }}">{{ $storage->name }}</option>
+                                    <option value="{{ $storage->id }}" {{ old('storage_id') == $storage->id ? ' selected' : '' }}>    
+                                        {{ $storage->name }}
+                                    </option>
                                   @endforeach
                                 </select>
+
+                                @if ($errors->has('storage_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('storage_id') }}</strong>
+                                    </span>
+                                @endif
+
                             </div>
                         </div>
 
@@ -68,6 +86,13 @@
 								  <option value="1">Si</option>
 								  <option value="0">No</option>
 								</select>
+
+                                @if ($errors->has('active'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('active') }}</strong>
+                                    </span>
+                                @endif
+
                             </div>
                         </div>
 						<!--Boton Submit-->
